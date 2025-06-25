@@ -15,9 +15,7 @@ sys.path.append(lib_path)
 
 from utilities3 import (
     should_perform_task,
-    get_existing_task_output,
-    load_config,
-    set_imagemagick_env
+    get_existing_task_output
 )
 
 from utilities2 import (
@@ -49,8 +47,6 @@ clips_file = sys.argv[2]
 # Init & Config
 # ======================================
 logger = initialize_logging()
-platform_config = load_config()
-set_imagemagick_env(platform_config)
 app_config = load_app_config()
 
 
