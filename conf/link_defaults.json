@@ -14,6 +14,6 @@
         "make_clips": true,
         "extract_audio": false,
         "generate_captions": false,
-        "post_processed": false
+        "post_process": false
     }
 }
