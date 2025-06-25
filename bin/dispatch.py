@@ -12,7 +12,7 @@ lib_path = os.path.join(current_dir, "../lib/python_utils")
 sys.path.append(lib_path)
 
 # Import utilities
-from utilities2 import initialize_logging, load_config, load_app_config
+from utilities2 import initialize_logging, load_app_config
 from utilities3 import find_url_json
 
 # Map tasks to their respective scripts
@@ -81,8 +81,7 @@ def main():
 
         url = url_args[0].strip()
 
-        # Load configuration and logger
-        config = load_config()
+        # Initialize logger and load application config
         logger = initialize_logging()
         app_config = load_app_config()
         logger.info("🔁 Task Router Started")

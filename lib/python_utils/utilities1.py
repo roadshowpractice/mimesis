@@ -188,21 +188,15 @@ def create_subdir(base_dir="clips", subdir_name="orange"):
 
 # Load Platform-Specific Configuration
 def load_config():
-    """Load configuration based on the operating system."""
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    config_path = os.path.join(current_dir, "../conf/config.json")
+    """Return application config.
 
-    if not os.path.exists(config_path):
-        raise FileNotFoundError(f"Configuration file not found at {config_path}")
+    The old implementation loaded platform specific settings from
+    ``conf/config.json``.  That file is no longer used.  To keep the
+    existing callers working, this function simply proxies to
+    :func:`load_app_config` which reads ``conf/app_config.json``.
+    """
 
-    with open(config_path, "r") as file:
-        config = json.load(file)
-
-    os_name = platform.system()
-    if os_name not in config:
-        raise ValueError(f"Unsupported platform: {os_name}")
-
-    return config[os_name]
+    return load_app_config()
 
 
 def create_output_directory(base_dir="clips"):

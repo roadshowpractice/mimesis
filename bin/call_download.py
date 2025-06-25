@@ -3,7 +3,6 @@ import os
 import json
 import logging
 import traceback
-import platform
 from datetime import datetime
 
 # Add lib path to sys.path
@@ -14,8 +13,7 @@ sys.path.append(lib_path)
 # Import modules
 import downloader5
 import utilities1
-from utilities2 import initialize_logging, load_config
-from utilities3 import set_imagemagick_env, transcribe_full_video, extract_full_audio
+from utilities2 import initialize_logging, load_app_config
 from utilities4 import should_perform_task, get_existing_task_output, extend_metadata_with_task_output, find_url_json, copy_metadata_to_backup, load_default_tasks, add_default_tasks_to_metadata, update_task_output_path
 
 # ======================================
@@ -29,15 +27,14 @@ task = "perform_download"
 # Initialize logging once
 logger = initialize_logging()
 
-# Load platform config and set up environment
-platform_config = load_config()
-set_imagemagick_env(platform_config)
+# Load application config
+app_config = load_app_config()
 
 # Load task list from JSON config instead of YAML
 logger.info("🔴 Entering main routine... 🚀")
 default_tasks = load_default_tasks()  # Load the default task flags
 logger.info(f"🧩 Loaded default_tasks from JSON: {default_tasks}")  # Log the loaded task flags
-app_config = {"default_tasks": default_tasks}
+app_config["default_tasks"] = default_tasks
 
 # ======================================
 # Task Skipping Logic
@@ -67,7 +64,7 @@ def main():
         logger.info("🔴 Entering main download logic... 🚀")
 
         # Set up paths
-        target_usb = platform_config["target_usb"]
+        target_usb = app_config["target_usb"]
         download_date = datetime.now().strftime("%Y-%m-%d")
         download_path = os.path.join(target_usb, download_date)
 
@@ -110,9 +107,9 @@ def main():
         # Prepare parameters for function calls
         params = {
             "download_path": download_path,
-            "cookie_path": platform_config.get("cookie_path"),
+            "cookie_path": app_config.get("cookie_path"),
             "url": url,
-            **platform_config.get("watermark_config", {}),
+            **app_config.get("watermark_config", {}),
         }
 
         params["task"] = task  # ✅ add this
