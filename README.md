@@ -46,3 +46,8 @@ mimesis/
 ├── requirements.txt   # ✔️ Exists
 
 
+
+## Further Reading
+
+For ideas on simplifying the internal modules, see
+[`docs/library_consolidation.md`](docs/library_consolidation.md).
