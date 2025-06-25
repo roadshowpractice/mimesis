@@ -1,0 +1,37 @@
+[
+    {
+        "url": "https://www.facebook.com/officialtimballard/videos/346822202772450/",
+        "tasks": {
+            "perform_download": true,
+            "apply_watermark": true
+        }
+    },
+    {
+        "url": "https://www.facebook.com/reel/813536073745756/",
+        "tasks": {
+            "perform_download": true,
+            "apply_watermark": true
+        }
+    },
+    {
+        "url": "https://www.facebook.com/officialtimballard/videos/577760495375173/",
+        "tasks": {
+            "perform_download": true,
+            "apply_watermark": true
+        }
+    },
+    {
+        "url": "https://www.facebook.com/officialtimballard/videos/565579043257540/",
+        "tasks": {
+            "perform_download": true,
+            "apply_watermark": true
+        }
+    },
+    {
+        "url": "https://www.facebook.com/officialtimballard/videos/4051476881847337/",
+        "tasks": {
+            "perform_download": true,
+            "apply_watermark": true
+        }
+    }
+]
