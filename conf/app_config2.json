@@ -1,0 +1,5 @@
+{
+    "target_usb": "./usb_drive",
+    "cookie_path": "cookies.txt",
+    "watermark_config": {}
+}
