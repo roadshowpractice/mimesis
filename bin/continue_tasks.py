@@ -17,7 +17,6 @@ from tasks_lib import get_task_states, find_url_json
 logger = initialize_logging()
 
 # === MAIN EXECUTION ===
-from tasks_lib import find_url_json, get_task_states
 
 def main():
     try:
