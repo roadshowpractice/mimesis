@@ -13,6 +13,7 @@ sys.path.append(lib_path)
 # Import modules
 import downloader5
 from video_utils import initialize_logging, load_app_config
+from url_utils import sanitize_facebook_url
 from tasks_lib import store_params_as_json
 from tasks_lib import (
     should_perform_task,
@@ -38,6 +39,9 @@ logger = initialize_logging()
 
 # Load application config
 app_config = load_app_config()
+if "target_usb" not in app_config:
+    logger.error("target_usb not configured. Set TARGET_USB or edit conf/config.json")
+    sys.exit(1)
 
 # Load task list from JSON config instead of YAML
 logger.info("🔴 Entering main routine... 🚀")
@@ -102,6 +106,7 @@ def main():
             sys.exit(1)
 
         url = sys.argv[1].strip()
+        url = sanitize_facebook_url(url)
 
         # Attempt to find metadata for the URL
         found_file, found_data = find_url_json(url, metadata_dir="./metadata")
