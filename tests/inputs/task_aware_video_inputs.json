@@ -1,0 +1,67 @@
+[
+  {
+    "url": "https://www.facebook.com/reel/474444851898251",
+    "title": "Thank you, Brazil! We will be back soon to EXECUTE!",
+    "date": "2025-06-06",
+    "tasks": {
+      "perform_download": true,
+      "apply_watermark": true,
+      "make_clips": false,
+      "extract_audio": false,
+      "generate_captions": false,
+      "post_process": false
+    }
+  },
+  {
+    "url": "https://www.facebook.com/reel/2118594291838234",
+    "title": "We get a lot of comments wondering why we aren\u2019t helping American children",
+    "date": "2025-03-28",
+    "tasks": {
+      "perform_download": true,
+      "apply_watermark": true,
+      "make_clips": false,
+      "extract_audio": false,
+      "generate_captions": false,
+      "post_process": false
+    }
+  },
+  {
+    "url": "https://www.facebook.com/reel/312472767932912",
+    "title": "My wife, Katherine, is the brightest human life I have ever experienced",
+    "date": "2025-06-04",
+    "tasks": {
+      "perform_download": true,
+      "apply_watermark": true,
+      "make_clips": false,
+      "extract_audio": false,
+      "generate_captions": false,
+      "post_process": false
+    }
+  },
+  {
+    "url": "https://www.facebook.com/reel/1467727754175035",
+    "title": "To learn the story behind this sweet little girl",
+    "date": "2025-06-22",
+    "tasks": {
+      "perform_download": true,
+      "apply_watermark": true,
+      "make_clips": false,
+      "extract_audio": false,
+      "generate_captions": false,
+      "post_process": false
+    }
+  },
+  {
+    "url": "https://www.facebook.com/reel/1010956570179456",
+    "title": "Have you ever heard of Restaveks? These children are in a form of modern\u2011day servitude.",
+    "date": "2025-06-16",
+    "tasks": {
+      "perform_download": true,
+      "apply_watermark": true,
+      "make_clips": false,
+      "extract_audio": false,
+      "generate_captions": false,
+      "post_process": false
+    }
+  }
+]
