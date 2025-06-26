@@ -12,8 +12,8 @@ sys.path.append(lib_path)
 
 # Import modules
 import downloader5
-import utilities1
-from utilities1 import initialize_logging, load_app_config
+from video_utils import initialize_logging, load_app_config
+from tasks_lib import store_params_as_json
 from tasks_lib import (
     should_perform_task,
     get_existing_task_output,
@@ -140,7 +140,7 @@ def main():
         function_calls = [
             downloader5.mask_metadata,
             downloader5.create_original_filename,
-            utilities1.store_params_as_json,
+            store_params_as_json,
             copy_metadata_to_backup,
             extend_metadata_with_task_output,
         ]

@@ -29,7 +29,7 @@ from transcription_utils import (
    
 )
 
-from utilities1 import (
+from video_utils import (
     initialize_logging,
     load_app_config,
     create_output_directory,
