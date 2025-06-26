@@ -132,6 +132,16 @@ def load_app_config():
                 "Unable to load platform overrides from config.json"
             )
 
+    # Ensure the target USB location is defined
+    if "target_usb" not in app_config:
+        env_usb = os.environ.get("TARGET_USB")
+        if env_usb:
+            app_config["target_usb"] = env_usb
+        else:
+            raise RuntimeError(
+                "'target_usb' not configured. Set it in conf/config.json or via TARGET_USB environment variable."
+            )
+
     return app_config
 
 
