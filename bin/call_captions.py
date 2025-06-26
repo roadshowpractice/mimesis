@@ -14,7 +14,7 @@ sys.path.append(lib_path)
 
 # === Imports from shared utils ===
 from utilities2 import initialize_logging, load_app_config
-from utilities3 import extract_audio_from_video, transcribe_audio, generate_dynamic_clips_from_metadata
+from utilities3 import extract_audio_from_video, transcribe_audio
 
 # Initialize logger
 logger = initialize_logging()

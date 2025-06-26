@@ -17,7 +17,6 @@ from tasks_lib import get_task_states, find_url_json
 logger = initialize_logging()
 
 # === MAIN EXECUTION ===
-from tasks_lib import find_url_json, get_task_states
 
 def main():
     try:
@@ -54,7 +53,7 @@ def main():
         logger.info(f"🎬 Found video path: {video_path}")
 
         # Define task order
-        task_order = ["perform_download", "apply_watermark", "generate_captions", "post_processed"]
+        task_order = ["perform_download", "apply_watermark", "generate_captions", "post_process"]
 
         for task in task_order:
             val = task_states.get(task)
