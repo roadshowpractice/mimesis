@@ -13,19 +13,19 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 lib_path = os.path.join(current_dir, "../lib/python_utils")
 sys.path.append(lib_path)
 
-from utilities3 import (
+from tasks_lib import (
     should_perform_task,
-    get_existing_task_output
+    get_existing_task_output,
 )
 
-from utilities2 import (
+from video_utils import (
     initialize_logging,
     load_app_config,
     load_clips_from_file,
     create_output_directory,
     process_clips_moviepy,
     process_clips_with_captions,
-    create_subdir
+    create_subdir,
 )
 
 # ======================================

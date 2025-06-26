@@ -9,8 +9,8 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 lib_path = os.path.join(current_dir, "../lib/python_utils")
 sys.path.append(lib_path)
 
-from utilities2 import initialize_logging,load_app_config
-from utilities4 import update_task_output_path, add_default_tasks_to_metadata
+from video_utils import initialize_logging, load_app_config
+from tasks_lib import update_task_output_path, add_default_tasks_to_metadata
 
 # === Attempt to import watermarking function ===
 try:
