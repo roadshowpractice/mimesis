@@ -19,8 +19,6 @@ from tasks_lib import find_url_json
 TASK_DISPATCH = {
     "perform_download": "bin/call_download.py",
     "apply_watermark": "bin/call_watermark.py",
-    "make_clips": "bin/call_make_clips.py",
-    "extract_audio": "bin/call_extract_audio.py",
     "generate_captions": "bin/call_captions.py",
     "post_process": "bin/call_screenshots.py"
 }

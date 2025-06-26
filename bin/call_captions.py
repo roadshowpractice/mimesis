@@ -13,12 +13,14 @@ lib_path = os.path.join(current_dir, "../lib/python_utils")
 sys.path.append(lib_path)
 
 # === Imports from shared utils ===
+
 from video_utils import (
     initialize_logging,
     load_app_config,
     extract_audio_from_video,
     transcribe_audio,
 )
+
 
 # Initialize logger
 logger = initialize_logging()

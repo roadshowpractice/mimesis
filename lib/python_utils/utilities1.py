@@ -7,6 +7,7 @@ import logging
 import json
 import logging
 import sys
+import platform
 from datetime import datetime
 
 
@@ -149,24 +150,39 @@ def initialize_logging():
 
 
 def load_app_config():
-    """Load the application configuration from a JSON file."""
+    """Load the application configuration, merging OS-specific overrides."""
     current_dir = os.path.dirname(os.path.abspath(__file__))
     base_dir = os.path.join(current_dir, "../../")
-    
+
     if not os.path.exists(base_dir):
         raise FileNotFoundError(f"Base directory not found at {base_dir}")
-    
-    config_path = os.path.join(base_dir, "conf/app_config.json")
 
+    config_path = os.path.join(base_dir, "conf/app_config.json")
     if not os.path.exists(config_path):
         raise FileNotFoundError(f"Configuration file not found at {config_path}")
-    
+
     try:
         with open(config_path, "r") as file:
             app_config = json.load(file)
-        return app_config
     except json.JSONDecodeError as e:
-        raise ValueError(f"Failed to parse JSON configuration at {config_path}: {e}")
+        raise ValueError(
+            f"Failed to parse JSON configuration at {config_path}: {e}"
+        )
+
+    # Apply platform-specific overrides if available
+    platform_config_path = os.path.join(base_dir, "conf/config.json")
+    if os.path.exists(platform_config_path):
+        try:
+            with open(platform_config_path, "r") as file:
+                platform_configs = json.load(file)
+            system = platform.system()
+            overrides = platform_configs.get(system)
+            if isinstance(overrides, dict):
+                app_config.update(overrides)
+        except Exception:
+            logger.warning("Unable to load platform overrides from config.json")
+
+    return app_config
 
 def create_subdir(base_dir="clips", subdir_name="orange"):
     """
