@@ -28,13 +28,13 @@ from transcription_utils import (
    
 )
 
-from utilities1 import (
+from video_utils import (
     initialize_logging,
     load_app_config,
     create_output_directory,
     create_subdir,
-    distill_run_snapshot
 )
+from transcription_utils import distill_run_snapshot
 
 
 # Initialize the logger

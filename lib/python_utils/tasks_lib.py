@@ -119,6 +119,32 @@ def copy_metadata_to_backup(params: dict) -> dict:
     return {"full_metadata_json": target_path}
 
 
+def store_params_as_json(params: dict) -> dict:
+    """Persist parameter dictionary next to the downloaded video.
+
+    The JSON filename mirrors the ``original_filename`` parameter with a
+    ``.json`` extension.  A small dictionary containing the new path is
+    returned so callers can easily merge it into their workflow.
+    """
+    try:
+        original_filename = params.get("original_filename")
+        if original_filename:
+            json_filename = os.path.splitext(original_filename)[0] + ".json"
+            with open(json_filename, "w") as json_file:
+                json.dump(params, json_file, indent=4)
+            logger.info(f"Params saved to JSON file: {json_filename}")
+            return {"config_json": json_filename}
+        else:
+            logger.warning(
+                "No original filename found in params to create JSON file."
+            )
+            return {"config_json": None}
+    except Exception as e:
+        logger.error(f"Failed to save params to JSON: {e}")
+        logger.debug(traceback.format_exc())
+        return {"config_json": None}
+
+
 def extend_metadata_with_task_output(params: dict) -> dict:
     """
     Updates the metadata JSON to mark the task as completed with the final output path.
