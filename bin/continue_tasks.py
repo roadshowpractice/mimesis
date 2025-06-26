@@ -10,7 +10,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 lib_path = os.path.join(current_dir, "../lib/python_utils")
 sys.path.append(lib_path)
 
-from utilities2 import initialize_logging, load_app_config
+from utilities1 import initialize_logging, load_app_config
 from tasks_lib import get_task_states, find_url_json
 
 # Initialize the logger

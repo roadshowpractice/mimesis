@@ -12,8 +12,8 @@ lib_path = os.path.join(current_dir, "../lib/python_utils")
 sys.path.append(lib_path)
 
 # Import utilities
-from utilities2 import initialize_logging, load_app_config
-from utilities3 import find_url_json
+from utilities1 import initialize_logging, load_app_config
+from tasks_lib import find_url_json
 
 # Map tasks to their respective scripts
 TASK_DISPATCH = {

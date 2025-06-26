@@ -13,8 +13,17 @@ sys.path.append(lib_path)
 # Import modules
 import downloader5
 import utilities1
-from utilities2 import initialize_logging, load_app_config
-from utilities4 import should_perform_task, get_existing_task_output, extend_metadata_with_task_output, find_url_json, copy_metadata_to_backup, load_default_tasks, add_default_tasks_to_metadata, update_task_output_path
+from utilities1 import initialize_logging, load_app_config
+from tasks_lib import (
+    should_perform_task,
+    get_existing_task_output,
+    extend_metadata_with_task_output,
+    find_url_json,
+    copy_metadata_to_backup,
+    load_default_tasks,
+    add_default_tasks_to_metadata,
+    update_task_output_path,
+)
 
 # ======================================
 # Task Definition
