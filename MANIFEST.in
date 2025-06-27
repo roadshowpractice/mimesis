@@ -1,0 +1,10 @@
+include LICENSE
+include README.md
+include requirements.txt
+include run.sh
+include setup_venv.sh
+recursive-include bin *
+recursive-include conf *
+recursive-include lib *
+recursive-include docs *.md
+recursive-include tests *

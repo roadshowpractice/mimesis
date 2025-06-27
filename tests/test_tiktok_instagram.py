@@ -26,6 +26,7 @@ def test_detect_as_instagram():
 
 
 def test_download_with_stub(tmp_path, monkeypatch):
+    logger.debug("I can see it in the debugger")
     class FakeYDL:
         def __init__(self, opts):
             self.opts = opts
