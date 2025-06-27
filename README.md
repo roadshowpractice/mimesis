@@ -30,6 +30,8 @@ Application defaults live in `conf/app_config.json`.  At runtime
 `load_app_config()` also looks for optional per-OS overrides in
 `conf/config.json` keyed by the value of `platform.system()`.  When
 present, those settings are merged into the base configuration.
+The base config now includes a `target_usb` path which download
+scripts use as the default mount point for removable storage.
 
 ## Requirements
 
