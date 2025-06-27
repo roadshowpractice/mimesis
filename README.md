@@ -48,7 +48,7 @@ mimesis/
 ├── bin/               # CLI scripts
 ├── conf/              # Configs
 ├── data/              # Media input
-├── lib/               # Local modules (Acme/ and helpers)
+├── lib/               # Local Python modules
 ├── README.md          # ✔️ Exists
 ├── requirements.txt   # ✔️ Exists
 

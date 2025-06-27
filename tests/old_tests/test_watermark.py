@@ -2,7 +2,7 @@ from pathlib import Path
 import types
 import sys
 
-sys.path.append(str(Path(__file__).resolve().parents[1] / "lib" / "python_utils"))
+sys.path.append(str(Path(__file__).resolve().parents[1] / "lib"))
 
 # Provide a stub yt_dlp so downloader5 can be imported without the real package
 class _FakeYDL:

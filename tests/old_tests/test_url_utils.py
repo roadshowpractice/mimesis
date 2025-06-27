@@ -1,7 +1,7 @@
 from pathlib import Path
 import sys
 
-sys.path.append(str(Path(__file__).resolve().parents[1] / "lib" / "python_utils"))
+sys.path.append(str(Path(__file__).resolve().parents[1] / "lib"))
 
 from url_utils import sanitize_facebook_url, detect_host
 

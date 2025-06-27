@@ -30,15 +30,16 @@ The standalone utilities once found in `python_utils` now live directly under
 `lib/` as part of the growing `mimesis` package.  All scripts in `bin/`
 import from this location instead of relying on loose files on the path.
 
-We also suggest rewriting the Perl wrapper (`Acme::Frobnitz`) in Python so
-that all tooling lives in one language.  Any features unique to the Perl
-module can be ported into a Python helper class inside the new package.
+We replaced the old Perl wrapper (`Acme::Frobnitz`) with a Python
+implementation so that all tooling now lives in one language.  Any
+remaining features from the Perl module have been ported into helper
+classes inside the package.
 
 ## Steps
 
 1. Move the helper modules from `lib/python_utils` into `lib/`, updating the
    imports accordingly.
-2. Convert the functions from `Acme::Frobnitz` to Python.  This removes the
+2. Convert the functions from `Acme::Frobnitz` to Python.  This removed the
    dependency on Perl while keeping the same functionality.
 3. Update the scripts under `bin/` to use the `mimesis` package.
 4. Provide a top‑level console script (e.g. `mimesis-cli`) that exposes the
