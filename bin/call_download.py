@@ -13,7 +13,7 @@ sys.path.append(lib_path)
 # Import modules
 import downloader5
 from video_utils import initialize_logging, load_app_config
-from url_utils import sanitize_facebook_url
+from url_utils import sanitize_facebook_url, detect_host
 from tasks_lib import store_params_as_json
 from tasks_lib import (
     should_perform_task,
@@ -107,6 +107,8 @@ def main():
 
         url = sys.argv[1].strip()
         url = sanitize_facebook_url(url)
+        host = detect_host(url)
+        logger.info(f"Detected host: {host}")
 
         # Attempt to find metadata for the URL
         found_file, found_data = find_url_json(url, metadata_dir="./metadata")
@@ -123,6 +125,7 @@ def main():
             "download_path": download_path,
             "cookie_path": app_config.get("cookie_path"),
             "url": url,
+            "host": host,
             **app_config.get("watermark_config", {}),
         }
 

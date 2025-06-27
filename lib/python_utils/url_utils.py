@@ -20,3 +20,17 @@ def sanitize_facebook_url(url: str) -> str:
         return url
 
     return f"https://www.facebook.com/watch/?v={vid}"
+
+
+def detect_host(url: str) -> str:
+    """Return a short name describing the hosting platform for ``url``."""
+    host = urlparse(url).netloc.lower()
+    if "facebook.com" in host:
+        return "facebook"
+    elif "instagram.com" in host:
+        return "instagram"
+    elif "youtube.com" in host or "youtu.be" in host:
+        return "youtube"
+    elif "google.com" in host or "googleusercontent.com" in host:
+        return "google_drive"
+    return "unknown"
