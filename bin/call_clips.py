@@ -10,7 +10,7 @@ os.environ["IMAGEMAGICK_BINARY"] = os.getenv("IMAGEMAGICK_BINARY", "magick")
 
 # Import external utility functions
 current_dir = os.path.dirname(os.path.abspath(__file__))
-lib_path = os.path.join(current_dir, "../lib/python_utils")
+lib_path = os.path.join(current_dir, "../lib")
 sys.path.append(lib_path)
 
 from tasks_lib import (

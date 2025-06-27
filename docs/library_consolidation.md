@@ -1,9 +1,10 @@
 # Library Consolidation Proposal
 
 This document outlines a path for simplifying the current layout of the
-`lib` directory.  Today we maintain a Perl module (`Acme::Frobnitz`) and a
-set of standalone Python files in `python_utils`.  The mixed language
-approach and many entry points make the codebase harder to maintain.
+`lib` directory.  Historically we maintained a Perl module (`Acme::Frobnitz`)
+and a set of standalone Python files under `python_utils`.  The mixed language
+approach and many entry points made the codebase harder to maintain.  The
+Python modules now live directly in `lib/`.
 
 ## Goals
 
@@ -25,9 +26,9 @@ lib/
         ...
 ```
 
-*The existing `python_utils` modules become submodules of `mimesis`.*
-All scripts in `bin/` would import from this package instead of relying on
-loose files on the path.
+The standalone utilities once found in `python_utils` now live directly under
+`lib/` as part of the growing `mimesis` package.  All scripts in `bin/`
+import from this location instead of relying on loose files on the path.
 
 We also suggest rewriting the Perl wrapper (`Acme::Frobnitz`) in Python so
 that all tooling lives in one language.  Any features unique to the Perl
@@ -35,8 +36,8 @@ module can be ported into a Python helper class inside the new package.
 
 ## Steps
 
-1. Create `lib/mimesis` and move the contents of `lib/python_utils` into it,
-   updating the imports accordingly.
+1. Move the helper modules from `lib/python_utils` into `lib/`, updating the
+   imports accordingly.
 2. Convert the functions from `Acme::Frobnitz` to Python.  This removes the
    dependency on Perl while keeping the same functionality.
 3. Update the scripts under `bin/` to use the `mimesis` package.

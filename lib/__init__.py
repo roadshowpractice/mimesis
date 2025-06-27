@@ -5,4 +5,5 @@ from .transcription_utils import *   # transcription support
 from .video_utils import *           # logging, video functions
 from .watermarker2 import *          # watermarking logic
 from .whisper_utils import *         # Whisper-related functions
+from .url_utils import *             # URL helpers
 

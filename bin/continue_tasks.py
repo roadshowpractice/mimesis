@@ -7,7 +7,7 @@ from datetime import datetime
 
 # === Load from local utils ===
 current_dir = os.path.dirname(os.path.abspath(__file__))
-lib_path = os.path.join(current_dir, "../lib/python_utils")
+lib_path = os.path.join(current_dir, "../lib")
 sys.path.append(lib_path)
 
 from video_utils import initialize_logging, load_app_config
