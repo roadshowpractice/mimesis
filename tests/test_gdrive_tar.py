@@ -9,7 +9,7 @@ import sys
 sys.path.append(str(Path(__file__).resolve().parents[1] / "lib"))
 sys.modules.setdefault("requests", types.SimpleNamespace())
 
-import archive_utils
+import mimesis.archive as archive_utils
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

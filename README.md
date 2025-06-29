@@ -50,7 +50,8 @@ mimesis/
 ├── bin/               # CLI scripts
 ├── conf/              # Configs
 ├── data/              # Media input
-├── lib/               # Local modules (Acme/ and helpers)
+├── lib/
+│   └── mimesis/       # Consolidated helper package
 ├── README.md          # ✔️ Exists
 ├── requirements.txt   # ✔️ Exists
 
