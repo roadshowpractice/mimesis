@@ -24,9 +24,8 @@ from video_utils import initialize_logging  # type: ignore
 
 logger = initialize_logging()
 
-
 def process_metadata(json_path: Path) -> None:
-    """Move watermarked video referenced in ``json_path`` to the vault."""
+    logger.info("Processing: %s", json_path)
     try:
         with open(json_path, "r") as fh:
             data = json.load(fh)
@@ -34,40 +33,38 @@ def process_metadata(json_path: Path) -> None:
         logger.error("Failed to load %s: %s", json_path, exc)
         return
 
-    tasks = data.get("default_tasks", {})
-    wm_key = None
-    video_path = None
-    for key in ("add_watermark", "apply_watermark"):
-        val = tasks.get(key)
-        if isinstance(val, str):
-            wm_key = key
-            video_path = Path(val)
-            break
+    orig_path_str = data.get("original_filename") or data.get("to_process")
+    if not orig_path_str:
+        logger.debug("No original_filename or to_process in %s", json_path)
+        return
 
-    if wm_key and video_path and video_path.is_file():
-        vault_dir = json_path.parent / "distro" / "vault"
-        vault_dir.mkdir(parents=True, exist_ok=True)
-        new_video = vault_dir / video_path.name
-        if video_path.resolve() != new_video.resolve():
-            try:
-                shutil.move(str(video_path), new_video)
-                logger.info("Moved %s -> %s", video_path, new_video)
-            except Exception as exc:
-                logger.error("Could not move %s: %s", video_path, exc)
-                return
-        tasks[wm_key] = str(new_video)
-        data["default_tasks"] = tasks
-        new_json = vault_dir / json_path.name
-        try:
-            with open(new_json, "w") as fh:
-                json.dump(data, fh, indent=4)
-            if json_path.resolve() != new_json.resolve():
-                json_path.unlink(missing_ok=True)
-            logger.info("Updated metadata saved to %s", new_json)
-        except Exception as exc:
-            logger.error("Failed to write updated JSON: %s", exc)
-    else:
-        logger.debug("No watermarked video to move for %s", json_path)
+    orig_path = Path(orig_path_str)
+    if not orig_path.is_file():
+        logger.debug("Original video file does not exist: %s", orig_path)
+        return
+
+    # Guess the watermarked version
+    wm_path = orig_path.with_name(orig_path.stem + "_watermarked.mp4")
+    if not wm_path.is_file():
+        logger.debug("Watermarked video not found: %s", wm_path)
+        return
+
+    vault_dir = json_path.parent / "distro" / "vault"
+    vault_dir.mkdir(parents=True, exist_ok=True)
+    new_video = vault_dir / wm_path.name
+    new_json = vault_dir / json_path.name
+
+    try:
+        shutil.move(str(wm_path), new_video)
+        logger.info("Moved watermarked video: %s -> %s", wm_path, new_video)
+        data["watermarked_file"] = str(new_video)
+        with open(new_json, "w") as fh:
+            json.dump(data, fh, indent=4)
+        if json_path.resolve() != new_json.resolve():
+            json_path.unlink(missing_ok=True)
+        logger.info("Saved updated metadata: %s", new_json)
+    except Exception as exc:
+        logger.error("Failed to move/update for %s: %s", json_path, exc)
 
 
 def main() -> None:
