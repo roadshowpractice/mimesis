@@ -24,6 +24,7 @@ from video_utils import initialize_logging  # type: ignore
 
 logger = initialize_logging()
 
+
 def process_metadata(json_path: Path) -> None:
     logger.info("Processing: %s", json_path)
     try:
@@ -35,18 +36,18 @@ def process_metadata(json_path: Path) -> None:
 
     orig_path_str = data.get("original_filename") or data.get("to_process")
     if not orig_path_str:
-        logger.debug("No original_filename or to_process in %s", json_path)
+        logger.warning("Missing original_filename or to_process in %s", json_path)
         return
 
     orig_path = Path(orig_path_str)
     if not orig_path.is_file():
-        logger.debug("Original video file does not exist: %s", orig_path)
+        logger.warning("Original video file missing: %s", orig_path)
         return
 
     # Guess the watermarked version
     wm_path = orig_path.with_name(orig_path.stem + "_watermarked.mp4")
     if not wm_path.is_file():
-        logger.debug("Watermarked video not found: %s", wm_path)
+        logger.warning("Expected watermarked video not found: %s", wm_path)
         return
 
     vault_dir = json_path.parent / "distro" / "vault"
