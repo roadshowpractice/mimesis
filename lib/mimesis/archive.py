@@ -5,6 +5,7 @@ import os
 import tarfile
 import re
 import requests
+from typing import Optional
 from url_utils import detect_host
 
 logger = logging.getLogger(__name__)
@@ -12,7 +13,7 @@ logger = logging.getLogger(__name__)
 _GDRIVE_RE = re.compile(r"(?:/file/d/|id=)([\w-]{10,})")
 
 
-def _extract_gdrive_id(url: str) -> str | None:
+def _extract_gdrive_id(url: str) -> Optional[str]:
     """Extract file ID from various Google Drive URL patterns."""
     m = _GDRIVE_RE.search(url)
     return m.group(1) if m else None
