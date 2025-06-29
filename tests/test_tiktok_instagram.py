@@ -11,8 +11,8 @@ sys.path.append(str(Path(__file__).resolve().parents[1] / "lib"))
 sys.modules['yt_dlp'] = types.SimpleNamespace(YoutubeDL=object)
 sys.modules['requests'] = types.SimpleNamespace()
 
-import downloader5
-from url_utils import detect_host, sanitize_instagram_url
+import mimesis.downloader as downloader5
+from mimesis.url import detect_host, sanitize_instagram_url
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
