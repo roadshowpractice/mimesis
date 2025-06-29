@@ -40,3 +40,31 @@ def test_initialize_logging_creates_log_file(tmp_path, monkeypatch):
     assert log_file.exists()
     contents = log_file.read_text()
     assert "hello from test" in contents
+
+
+def test_initialize_logging_custom_name(tmp_path, monkeypatch):
+    root_logger = logging.getLogger()
+    for h in list(root_logger.handlers):
+        root_logger.removeHandler(h)
+    monkeypatch.chdir(tmp_path)
+    logger = initialize_logging(log_name="custom")
+    logger.warning("hi custom")
+    log_file = tmp_path / "logs" / "custom.log"
+    assert log_file.exists()
+    assert "hi custom" in log_file.read_text()
+
+
+def test_initialize_logging_smoke(tmp_path, monkeypatch):
+    """Basic sanity check that handlers are attached and logging works."""
+    root_logger = logging.getLogger()
+    for h in list(root_logger.handlers):
+        root_logger.removeHandler(h)
+    monkeypatch.chdir(tmp_path)
+
+    logger = initialize_logging()
+    logger.debug("smoke test")
+
+    log_file = tmp_path / "logs" / "tja.log"
+    assert log_file.exists()
+    assert any(isinstance(h, logging.Handler) for h in root_logger.handlers)
+    assert "smoke test" in log_file.read_text()
