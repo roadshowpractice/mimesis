@@ -1,81 +1,92 @@
 #!/usr/bin/env python3
-"""Organize watermarked videos and metadata into a central vault.
-
-This utility searches a collection directory for metadata JSON files. If the
-metadata specifies a path for a completed watermark task and that file exists,
-the video and its JSON are moved into a ``distro/vault`` directory under the
-same collection date. The JSON is updated to reflect the new location.
-"""
+"""Move watermarked videos (from `add_watermark` task) and update JSON metadata."""
 
 import argparse
 import json
 import logging
-import os
 import shutil
 import sys
 from pathlib import Path
 
-# Add local ``lib`` to ``sys.path`` so we can reuse helpers
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-LIB_PATH = os.path.join(CURRENT_DIR, "../lib")
-sys.path.append(LIB_PATH)
 
-from video_utils import initialize_logging  # type: ignore
+def setup_logging(verbose: bool) -> logging.Logger:
+    logger = logging.getLogger("organize_vault")
+    logger.setLevel(logging.DEBUG if verbose else logging.INFO)
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter("%(levelname)-8s %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.propagate = False
+    return logger
 
-logger = initialize_logging()
 
-
-def process_metadata(json_path: Path) -> None:
-    logger.info("Processing: %s", json_path)
+def process_json(json_path: Path, logger: logging.Logger) -> None:
+    logger.debug(f"Processing: {json_path}")
     try:
-        with open(json_path, "r") as fh:
-            data = json.load(fh)
-    except Exception as exc:
-        logger.error("Failed to load %s: %s", json_path, exc)
+        with open(json_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        logger.warning(f"Skipping {json_path.name}: can't parse JSON ({e})")
         return
 
-    orig_path_str = data.get("original_filename") or data.get("to_process")
-    if not orig_path_str:
-        logger.warning("Missing original_filename or to_process in %s", json_path)
+    tasks = data.get("default_tasks", {})
+    value = tasks.get("add_watermark")
+
+    if not isinstance(value, str):
+        logger.debug(f"Skipping: 'add_watermark' not a path in {json_path.name}")
         return
 
-    orig_path = Path(orig_path_str)
-    if not orig_path.is_file():
-        logger.warning("Original video file missing: %s", orig_path)
-        return
+    wm_path = Path(value)
+    if not wm_path.is_absolute():
+        wm_path = json_path.parent / wm_path
 
-    # Guess the watermarked version
-    wm_path = orig_path.with_name(orig_path.stem + "_watermarked.mp4")
     if not wm_path.is_file():
-        logger.warning("Expected watermarked video not found: %s", wm_path)
+        logger.warning(f"Skipping: File not found - {wm_path}")
         return
 
     vault_dir = json_path.parent / "distro" / "vault"
     vault_dir.mkdir(parents=True, exist_ok=True)
-    new_video = vault_dir / wm_path.name
-    new_json = vault_dir / json_path.name
+
+    new_video_path = vault_dir / wm_path.name
+    new_json_path = vault_dir / json_path.name
 
     try:
-        shutil.move(str(wm_path), new_video)
-        logger.info("Moved watermarked video: %s -> %s", wm_path, new_video)
-        data["watermarked_file"] = str(new_video)
-        with open(new_json, "w") as fh:
-            json.dump(data, fh, indent=4)
-        if json_path.resolve() != new_json.resolve():
+        shutil.move(str(wm_path), new_video_path)
+        logger.info(f"Moved video: {wm_path} → {new_video_path}")
+        tasks["add_watermark"] = str(new_video_path)
+        data["default_tasks"] = tasks
+
+        with open(new_json_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+
+        if json_path.resolve() != new_json_path.resolve():
             json_path.unlink(missing_ok=True)
-        logger.info("Saved updated metadata: %s", new_json)
-    except Exception as exc:
-        logger.error("Failed to move/update for %s: %s", json_path, exc)
+
+        logger.info(f"Updated metadata: {new_json_path}")
+    except Exception as e:
+        logger.error(f"Error moving/updating {json_path.name}: {e}")
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Organize watermark assets")
-    parser.add_argument("collection", help="Path to top-level collection")
+def main():
+    parser = argparse.ArgumentParser(description="Organize watermarked videos into vault")
+    parser.add_argument("collection", help="Top-level directory to scan for JSON")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Enable debug output")
     args = parser.parse_args()
 
-    base = Path(args.collection)
-    for json_file in base.rglob("*.json"):
-        process_metadata(json_file)
+    logger = setup_logging(args.verbose)
+    collection_dir = Path(args.collection)
+
+    if not collection_dir.is_dir():
+        logger.error(f"Directory does not exist: {collection_dir}")
+        sys.exit(1)
+
+    json_files = list(collection_dir.rglob("*.json"))
+    if not json_files:
+        logger.warning("No JSON files found.")
+        return
+
+    for json_file in json_files:
+        process_json(json_file, logger)
 
 
 if __name__ == "__main__":
