@@ -82,11 +82,19 @@ moviepy_config = {
 # ==================================================
 # LOGGING INITIALIZATION
 # ==================================================
-def initialize_logging() -> logging.Logger:
-    """Configure the root logger and return a module logger."""
-    log_dir = "./logs"
+def initialize_logging(log_name: str = "tja", log_dir: str = "./logs") -> logging.Logger:
+    """Configure the root logger and return a module logger.
+
+    Parameters
+    ----------
+    log_name:
+        Base name for the log file without extension.  ``"tja"`` by default.
+    log_dir:
+        Directory where log files are stored. ``"./logs"`` by default.
+    """
+
     os.makedirs(log_dir, exist_ok=True)
-    log_file = os.path.join(log_dir, "tja.log")
+    log_file = os.path.join(log_dir, f"{log_name}.log")
 
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.DEBUG)
