@@ -1,0 +1,48 @@
+{
+  "users": [
+    {
+      "handle": "actualidadconsoledad",
+      "name": "actualidad_con_soledad",
+      "verified": true,
+      "followers": "1.1K+",
+      "following": "312",
+      "posts": "154",
+      "bio": "Periodista independiente dedicada a la investigación.",
+      "date_modified": "2025-07-09",
+      "ISA_Gen_AI": null
+    },
+    {
+      "handle": "francoisevenspaul",
+      "name": "Evens Paul François",
+      "verified": true,
+      "followers": "31K",
+      "following": "835–838",
+      "posts": "1.9K",
+      "bio": "⚡Directo, Ofensivo y Escandaloso con la Verdad",
+      "date_modified": "2025-07-09",
+      "ISA_Gen_AI": null
+    },
+    {
+      "handle": "freddydice",
+      "name": "#FreddyDice/Politi...",
+      "verified": false,
+      "followers": "—",
+      "following": "—",
+      "posts": "—",
+      "bio": "Personal opinion videos on Venezuela politics",
+      "date_modified": "2025-07-09",
+      "ISA_Gen_AI": null
+    },
+    {
+      "handle": "sandrabronzina",
+      "name": "Sandra Bronzina",
+      "verified": true,
+      "followers": "35K–45K",
+      "following": "7.7K+",
+      "posts": "2.3K–2.5K",
+      "bio": "PR: @yachtmax @okeanyachts. Libertaría en lo económico, conservadora en los valores.",
+      "date_modified": "2025-07-09",
+      "ISA_Gen_AI": null
+    }
+  ]
+}
