@@ -14,4 +14,5 @@ __all__ = [
     "video",
     "watermark",
     "whisper",
+    "article",
 ]
