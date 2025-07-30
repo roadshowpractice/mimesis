@@ -40,7 +40,5 @@ def test_log_kilroy():
     assert log_file.exists(), "log file not created"
     contents = log_file.read_text()
     assert "Kilroy was here" in contents
-    # Clean up
-    for f in log_dir.glob("*"):
-        f.unlink()
-    log_dir.rmdir()
+    # leave log directory intact for inspection
+    print(f"log saved to {log_file}")
