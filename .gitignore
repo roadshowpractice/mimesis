@@ -23,6 +23,8 @@ venv.bak/
 
 # Test output
 *.log
+test_logs/
+test_outputs/
 
 # Python egg files
 *.egg
