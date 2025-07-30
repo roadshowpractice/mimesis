@@ -10,7 +10,15 @@ from note_synth import synthesize_from_json
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python notes_to_audio.py <notes.json> <output.wav>")
+    if len(sys.argv) < 2 or len(sys.argv) > 3:
+        print("Usage: python notes_to_audio.py <notes.json> [output.wav]")
         sys.exit(1)
-    synthesize_from_json(sys.argv[1], sys.argv[2])
+
+    notes_json = sys.argv[1]
+    if len(sys.argv) == 3:
+        output_path = sys.argv[2]
+    else:
+        output_path = os.path.join(current_dir, "../tests", "output.wav")
+
+    synthesize_from_json(notes_json, output_path)
+    print(f"Audio written to {output_path}")
