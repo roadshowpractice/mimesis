@@ -2,8 +2,11 @@
 
 ## Quickstart
 
-1. Set up environment:
+1. Set up environment (installs repo deps + compatible Whisper version):
     ./setup_venv.sh
+
+   Optional: pick a different Whisper build:
+    WHISPER_VERSION=20230918 ./setup_venv.sh
 
 2. Run full transcription:
     ./run.sh data/original.mp4
@@ -37,8 +40,13 @@ scripts use as the default mount point for removable storage.
 
 - Python 3.9+
 - ffmpeg
-- OpenAI Whisper:
-    pip install git+https://github.com/openai/whisper.git
+- OpenAI Whisper (pinned older version for compatibility):
+    pip install openai-whisper==20230314
+
+  `setup_venv.sh` installs a compatible `setuptools` and uses `--no-build-isolation`
+  for Whisper so older releases still install on newer Python environments.
+
+  If you need to override locally, set `WHISPER_VERSION` when running `setup_venv.sh`.
 - Others:
     pip install -r requirements.txt
 
