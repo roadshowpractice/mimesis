@@ -1,9 +1,14 @@
 moviepy==1.0.3
-numpy==2.2.4
-opencv_python==4.11.0.86
+
+# last numpy supporting Python 3.8
+numpy==1.24.4
+
+# compatible with numpy 1.24 and Python 3.8+
+opencv-python==4.8.1.78
+
 PyYAML==6.0.2
-PyYAML==6.0.2
-Requests==2.32.3
-SpeechRecognition==3.14.1
-yt_dlp==2025.3.26
+requests==2.32.3
+SpeechRecognition==3.10.4
 pytest
+
+beautifulsoup4==4.12.3
