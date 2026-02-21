@@ -43,9 +43,6 @@ scripts use as the default mount point for removable storage.
 - OpenAI Whisper (pinned older version for compatibility):
     pip install openai-whisper==20230314
 
-  `setup_venv.sh` installs a compatible `setuptools` and uses `--no-build-isolation`
-  for Whisper so older releases still install on newer Python environments.
-
   If you need to override locally, set `WHISPER_VERSION` when running `setup_venv.sh`.
 - Others:
     pip install -r requirements.txt
