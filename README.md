@@ -44,6 +44,9 @@ scripts use as the default mount point for removable storage.
     pip install openai-whisper==20230314
 
   If you need to override locally, set `WHISPER_VERSION` when running `setup_venv.sh`.
+  The setup script also installs setuptools/wheel and uses `--no-build-isolation`
+  to avoid `ModuleNotFoundError: pkg_resources` when building older Whisper releases
+  in newer Python environments.
 - Others:
     pip install -r requirements.txt
 
