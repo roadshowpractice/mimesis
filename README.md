@@ -17,6 +17,22 @@ Outputs:
 - Captions (.srt, .vtt)
 - Source article scrape
 
+## New Local Whisper CLI (No Scraping)
+
+Use `bin/transcribe_media.py` to transcribe a local media file directly (mp4/mov/mp3/wav) with optional JSONL metadata lookup. This workflow does **not** scrape articles, parse HTML, compare sources, or create run snapshots.
+
+Example:
+
+```bash
+python bin/transcribe_media.py /path/to/input.mp4 --srt --vtt --minute-json \
+  --jsonl /path/to/index.jsonl
+```
+
+Notes:
+- `--txt` and `--json` outputs are enabled by default.
+- Add `--no-metadata` to skip all metadata lookup.
+- `bin/call_whisper_transcribe.py` and `bin/call_whisper.py` are legacy scripts.
+
 ## Project Structure
 
 bin/        # Scripts (transcribe, captions, etc.)
