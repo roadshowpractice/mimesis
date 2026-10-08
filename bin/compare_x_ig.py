@@ -750,12 +750,12 @@ def cmd_ledger(a):
                 for v in i["vids"]:
                     xl, xh, xht = vp(v)
                     raw_d, trim_d = max(hamming(q, r) for q, r in zip(H, xh)), max(hamming(q, r) for q, r in zip(Ht, xht))
-                    key = (min(raw_d, trim_d), abs(xl - L))
+                    key = (trim_d, abs(xl - L))
                     if best is None or key < best[0]:
                         best = (key, i["id"], abs(xl - L), raw_d, trim_d)
             if best:
                 row.update(best_x=best[1], len_diff_s="{:.2f}".format(best[2]), dhash_raw=best[3], dhash_sides_trimmed=best[4])
-                hit = best[2] <= R["len_tol_s"] and min(best[3], best[4]) <= R["dhash_max"]
+                hit = best[2] <= R["len_tol_s"] and best[4] <= R["dhash_max"]
         elif img:
             h = dhash(_trim_black(Image.open(img[0]), False))
             for i in win:
@@ -779,7 +779,7 @@ def cmd_ledger(a):
     out.parent.mkdir(parents=True, exist_ok=True)
     cols = list(rows[0])
     with open(out, "w", encoding="utf-8") as f:
-        f.write("# rule: " + json.dumps(LEDGER_RULE) + " ; video MATCHED = len diff <= len_tol_s and dHash (raw or side-bars-trimmed) <= dhash_max at every frac\n")
+        f.write("# rule: " + json.dumps(LEDGER_RULE) + " ; video MATCHED = pure-black side bars trimmed from both, then len diff <= len_tol_s and dHash <= dhash_max at every frac (raw dHash shown, not used)\n")
         f.write("\t".join(cols) + "\n")
         for r in sorted(rows, key=lambda r: (r["day_pdt"], r["code"])):
             f.write("\t".join(str(r[c]) for c in cols) + "\n")
