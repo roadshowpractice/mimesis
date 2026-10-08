@@ -63,4 +63,4 @@ dmypy.json
 .pyre/
 
 # Local data
-data/
+/data/

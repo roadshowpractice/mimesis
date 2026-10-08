@@ -1,0 +1,11 @@
+x_status_id	ig_code	verdict	frame_dhash_distances_10_30_50_70_90pct
+2083336195715543493	Dbed4OEN_9d	SAME	0 2 0 1 2
+2084516126403199292	Dbm17ScJJmq	SAME	0 1 2 2 3
+2087299108016886089	Db6ohLRp-rK	SAME (different crop)	18 18 18 17 17; frames visibly identical
+2087734401102741732	Db9uvtKNmYf	SAME (different crop)	13 13 12 16 15; frames visibly identical
+2092055879013072972	DccZ0o1NmEo	SAME	1 1 1 0 1
+2092085370343108922	DcckYqIBFZ2	SAME	2 0 0 3 0
+2090581886380949752	Db6ohLRp-rK	NOT SAME (length coincidence)	26 26 35 29 37; best of all frames vs all reels 18+
+	Db9nwIFM1L7	NO MATCH same day	closest X media 18
+	DcH0fVYBHbq	NO MATCH same day	closest X media 23
+	DcR9bobtKcF	NO MATCH same day	closest X media 22

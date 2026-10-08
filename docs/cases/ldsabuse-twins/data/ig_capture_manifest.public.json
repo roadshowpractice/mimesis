@@ -1,0 +1,64 @@
+{
+  "subject": "ldsabuseonx",
+  "started_utc": "2026-10-07T22:07:41+00:00",
+  "finished_utc": "2026-10-07T22:10:55+00:00",
+  "collector": {
+    "account": "[acct:23a63b8ab683]",
+    "ds_user_id": "[acct:2544ff36f8dc]",
+    "cookie_file": "[redacted]"
+  },
+  "host": "[redacted]",
+  "method": "headless Chromium (Playwright) on the profile page, scrolling to trigger Instagram's own timeline API; responses recorded as received, unmodified. Images/video/fonts/CSS not loaded. No interaction beyond scrolling.",
+  "parameters": {
+    "max_rounds": 60,
+    "pause_seconds": [
+      4.0,
+      9.0
+    ],
+    "stall_limit": 15
+  },
+  "tools": {
+    "python": "3.10.20",
+    "playwright": "1.62.0",
+    "yt_dlp": "2026.8.19"
+  },
+  "code": {
+    "commit": "52c59b31666b475942ea66c7b735c3c36d051957",
+    "branch": "dev",
+    "dirty_files": [
+      "bin/collabnet.py",
+      "conf/app_config.json",
+      "conf/default_tasks.json",
+      "docs/subject/wiki_edits.md",
+      "lib/drive_check.py",
+      ".pipeline_tmp/",
+      "clips_manifest.json",
+      "clips_with_intro_manifest.json"
+    ],
+    "sha256_bin_ig_scrape_account_py": "da71b21c241309169736353562912455cfa71195563a04fdaca084ea99e6100a",
+    "sha256_igp_profile_history_py": "b46f52102ccd0d3873101eb34ac65897f073a9a7c4047567afafcb58e96b8c78"
+  },
+  "counts": {
+    "raw_responses": 7,
+    "posts": 32,
+    "profile_media_count": null
+  },
+  "files": {
+    "raw_responses.jsonl.gz": {
+      "sha256": "85fd12b2c453af47863607f946900327b9dfcdb4bb7fb8c590eef3fddd837e4c",
+      "bytes": 615402
+    },
+    "posts.jsonl": {
+      "sha256": "0e2a9e86d772fce0e1b4c2c55ebcc17e8b894167e8fbb7168b78d2372048b6b4",
+      "bytes": 33418
+    },
+    "profile.json": {
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "bytes": 2
+    },
+    "run.log": {
+      "sha256": "4294b1971572184d8e2970d8c5b977edb123b112fc62a4b26e978844f21ee4a7",
+      "bytes": 280
+    }
+  }
+}
