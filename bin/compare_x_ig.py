@@ -280,7 +280,9 @@ def cmd_fetch_x_media(a):
             if dst.exists():
                 continue
             r = sess.get(best["url"], timeout=120)
-            if r.status_code == 200 and r.content:
+            if r.status_code == 200 and r.content[4:8] != b"ftyp":   # X has served a JPEG thumbnail at a GIF's mp4 URL
+                custody(case, "fetch-x-media", "NOT A VIDEO {} ({} bytes, starts {!r}); not saved".format(raw.stem, len(r.content), r.content[:4]))
+            elif r.status_code == 200 and r.content:
                 dst.write_bytes(r.content)
                 custody(case, "fetch-x-media", "saved video {} ({} kbps variant)".format(
                     raw.stem, (best.get("bitrate") or 0) // 1000), dst)
@@ -719,6 +721,10 @@ def cmd_ledger(a):
         vids = [f for f in files if f.suffix == ".mp4"]
         photos = [f for f in files if f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")
                   and f.stem not in {v.stem for v in vids}]
+        bad = [v for v in vids if v.read_bytes()[4:8] != b"ftyp"]   # saved as .mp4 but not a video (old fetches)
+        for v in bad:
+            print("skipped (not a video):", v.relative_to(case))
+        vids = [v for v in vids if v not in bad]
         xs.append({"id": raw.stem, "day": ts.astimezone(pdt).date(), "vids": vids, "photos": photos})
     x_days = {i["day"] for i in xs}
     vcache = {}
