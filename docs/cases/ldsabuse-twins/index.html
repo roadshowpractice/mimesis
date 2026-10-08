@@ -1,0 +1,182 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="Six times in four weeks, the same video landed on X @ldsabuse and Instagram ldsabuseonx, 1 to 30 minutes apart. A forensic file and metadata comparison."><meta property="og:title" content="The ldsabuse Twins"><meta property="og:description" content="Six times in four weeks, the same video landed on X @ldsabuse and Instagram ldsabuseonx, 1 to 30 minutes apart. A forensic file and metadata comparison."><meta property="og:type" content="article"><meta property="og:image" content="img/og_card.png"><meta name="twitter:card" content="summary_large_image"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>The ldsabuse Twins</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Layout: one reading column (~68ch) with full-width evidence plates; the card system's navy + gold carried into a light/dark pair */
+:root{--bg:#f6f7fb;--panel:#ffffff;--ink:#121726;--muted:#5a6378;--line:#dde2ee;--accent:#b98100;--blue:#2459b8;--plate:#0b0f1a;--hl:#ffe08a;
+--display:"Space Grotesk",system-ui,sans-serif;--body:"Source Serif 4",Georgia,serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0f1a;--panel:#121a2b;--ink:#e8ecf4;--muted:#9aa4b8;--line:#22304d;--accent:#ffc94a;--blue:#7fb0ff;--plate:#070a12;--hl:rgba(255,201,74,.22);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b0f1a;--panel:#121a2b;--ink:#e8ecf4;--muted:#9aa4b8;--line:#22304d;--accent:#ffc94a;--blue:#7fb0ff;--plate:#070a12;--hl:rgba(255,201,74,.22);color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:400 18px/1.6 var(--body);padding-inline:16px}
+.wrap{max-width:1040px;margin:0 auto;padding-block:40px 80px;display:flex;flex-direction:column;gap:34px}
+.col{max-width:68ch}
+.eyebrow{font:600 13px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+h1{font:700 clamp(40px,7vw,76px)/1.02 var(--display);letter-spacing:-.025em;margin:10px 0 14px;text-wrap:balance} h1 span{color:var(--accent)}
+h2{font:700 30px/1.15 var(--display);letter-spacing:-.01em;margin:0 0 10px;text-wrap:balance}
+h3{font:700 21px var(--display);margin:18px 0 6px}
+p{margin:0 0 12px} b{font-weight:600} .lede{font-size:21px;color:var(--ink)}
+.muted{color:var(--muted)} .g{color:var(--accent);font-weight:600}
+section{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line);padding-top:28px}
+.stats{display:flex;flex-wrap:wrap;gap:14px}
+.stat{flex:1 1 200px;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.stat .n{font:700 40px/1 var(--display);color:var(--accent);font-variant-numeric:tabular-nums}
+.stat .l{font:400 15px/1.35 var(--body);color:var(--muted);margin-top:6px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font:400 15px var(--mono);font-variant-numeric:tabular-nums}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap} tr:last-child td{border-bottom:0}
+th{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--blue)} td.code{color:var(--muted)}
+figure{margin:0;display:flex;flex-direction:column;gap:8px}
+figure img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);background:var(--plate)}
+figcaption{font:400 14px/1.45 var(--mono);color:var(--muted)}
+.pair{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.pair figure{flex:1 1 260px;min-width:0}
+.callout{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:14px 18px}
+ul{margin:0 0 12px;padding-left:1.2em} li{margin:4px 0}
+.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.verdict div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;min-width:0}
+.verdict h3{margin-top:0}
+.scroll{max-height:900px;overflow-y:auto;border-radius:10px}
+code{font:400 .88em var(--mono)}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:center}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.hero-art{height:360px}}
+.hero-art{position:relative;height:460px}
+.poly{position:absolute;width:44%;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 8px 6px;box-shadow:0 14px 34px rgba(0,0,0,.28)}
+.poly img{display:block;width:100%;border-radius:8px;border:0}
+.poly span{display:block;font:600 13px var(--mono);color:var(--accent);margin-top:6px;text-align:center}
+.p1{left:4%;top:8%;transform:rotate(-4deg)} .p2{right:6%;top:16%;transform:rotate(3.5deg)}
+.sticker{position:absolute;right:-2%;top:-4%;width:132px;transform:rotate(-8deg);z-index:2;filter:drop-shadow(0 8px 16px rgba(0,0,0,.35))}
+@media (prefers-reduced-motion:no-preference){.sticker{animation:wob 5s ease-in-out infinite}@keyframes wob{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(-2deg) scale(1.04)}}}
+mark{background:none;color:var(--accent);background-image:linear-gradient(transparent 62%,var(--hl) 62%);padding:0 .05em}
+.kicker{font:600 17px var(--mono);color:var(--accent);letter-spacing:.02em}
+.tool{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.tool div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.tool code{display:block;margin-top:8px;color:var(--blue);white-space:pre-wrap;word-break:break-word}
+.badge{display:inline-block;font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bg);background:var(--accent);border-radius:4px;padding:3px 8px}
+.score{display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 4px}
+.score div{flex:1 1 220px;min-width:0;display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.score .n{font:700 64px/1 var(--display);color:var(--muted);font-variant-numeric:tabular-nums} .score .n.g{color:var(--accent)}
+.score .l{font:400 15px/1.35 var(--body);color:var(--muted)}
+a{color:var(--blue)} a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head><body><div class="wrap">
+<header class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">mimesis case · X @ldsabuse vs Instagram ldsabuseonx · Oct 2026</div>
+    <h1>Same video.<br><mark>Minutes apart.</mark></h1>
+    <p class="lede">An Instagram account called <b>ldsabuseonx</b> calls itself "Justin Riggs." On X, Justin Riggs posts as <b>@ldsabuse</b>. We compared the files and metadata the two accounts actually published, on the same days, with rules fixed in advance.</p>
+    <p class="kicker">We bet they shared nothing. The files called our bluff: six times in four weeks, the same video landed on both, 1 to 30 minutes apart.</p>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <img class="sticker" src="img/watch_buttfire.png" alt="">
+    <div class="poly p1"><img src="img/hello_x.jpg" alt=""><span>X · 22:45</span></div>
+    <div class="poly p2"><img src="img/hello_ig.jpg" alt=""><span>Instagram · 22:44</span></div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="n">6 of 9</div><div class="l">ldsabuseonx's own posts on the 7 days that are the same video @ldsabuse posted on X that day</div></div>
+  <div class="stat"><div class="n">1–30 min</div><div class="l">between the X post and the Instagram post, sometimes X first, sometimes Instagram</div></div>
+  <div class="stat"><div class="n">115 vs 9</div><div class="l">posts on those 7 days: X @ldsabuse vs ldsabuseonx</div></div>
+  <div class="stat"><div class="n">19 of 32</div><div class="l">posts on ldsabuseonx's grid that were started by other Instagram accounts</div></div>
+</div>
+
+<section class="col">
+  <div class="eyebrow">The question</div>
+  <h2>Two accounts that look like twins</h2>
+  <p>On the surface they look like one person's two accounts. The Instagram account's display name is "Justin Riggs" and its bio says "I'm @ldsabuse on X." Its first post (June 1, 2024) links an @ldsabuse X post from that evening. It posts in the months Riggs appears on <i>The Imagination Podcast</i>, and it covers his subjects.</p>
+  <p>All of that is surface: the account describing itself, or timing and topic. <b>The prediction we recorded before collecting the Instagram data</b> was that their actual posts would share nothing. This page is the test.</p>
+</section>
+
+
+<section class="col">
+  <div class="eyebrow">The bet</div>
+  <h2>A confident prediction, timestamped for posterity</h2>
+  <div class="score"><div><span class="n">0</span><span class="l">Prediction:<br>"they have nothing to do with each other"</span></div><div><span class="n g">6</span><span class="l">Files:<br>same videos, minutes apart</span></div></div>
+  <p>Before a single Instagram file was collected, the person running this case wrote it down with a timestamp: these two accounts have <i>nothing to do with each other</i>. It was a low-cost wager. It was also wrong six times. He asked us to say so, and to have some fun with it, so: the files won, the boss lost, and the boss is buying.</p>
+  <p class="muted">The AI helping out doesn't get to gloat. Its own guess (about 70 X posts on those seven days) came in at 115.</p>
+</section>
+<section>
+  <div class="col"><div class="eyebrow">Result 1 · files</div>
+  <h2>The same video files, posted minutes apart</h2>
+  <p>On the 7 days in July and August when ldsabuseonx posted something of its own, it made 9 posts. <b>Six of them are the same video @ldsabuse posted on X that day.</b></p></div>
+  <div class="tbl"><table><tr><th>Day (PDT)</th><th>X @ldsabuse</th><th>ldsabuseonx</th><th>Instagram post</th><th>Gap</th><th>Length X / IG</th></tr><tr><td>Jul 31</td><td>16:37</td><td>16:42</td><td class=code>Dbed4OEN_9d</td><td class=g>5 min</td><td>43.77 / 43.81 s</td></tr><tr><td>Aug 3</td><td>22:45</td><td>22:44</td><td class=code>Dbm17ScJJmq</td><td class=g>1 min</td><td>18.02 / 18.09 s</td></tr><tr><td>Aug 11</td><td>15:04</td><td>15:13</td><td class=code>Db6ohLRp-rK</td><td class=g>9 min</td><td>52.36 / 52.40 s</td></tr><tr><td>Aug 12</td><td>19:54</td><td>20:06</td><td class=code>Db9uvtKNmYf</td><td class=g>13 min</td><td>107.76 / 107.83 s</td></tr><tr><td>Aug 24</td><td>18:06</td><td>17:59</td><td class=code>DccZ0o1NmEo</td><td class=g>7 min</td><td>136.90 / 136.87 s</td></tr><tr><td>Aug 24</td><td>20:03</td><td>19:33</td><td class=code>DcckYqIBFZ2</td><td class=g>30 min</td><td>229.51 / 229.47 s</td></tr></table></div>
+  <p class="col muted">"Same" means: lengths agree within 0.1 s; frames taken at the same moments have image fingerprints 0–3 apart (unrelated videos score 23–40); two pairs cropped to a different shape are visibly the same frames. Both platforms re-encode uploads, so identical bytes aren't expected and none were found.</p>
+  <figure><div class="scroll"><img src="img/fig4_same_videos.jpg" alt="Six pairs of matching video frames, X on the left and Instagram on the right, with dates, times and fingerprint distances"></div><figcaption>Middle frames of each matched pair, X left, Instagram right. Scroll for all six.</figcaption></figure>
+</section>
+
+<section>
+  <div class="col"><div class="eyebrow">The comment</div>
+  <h2>"Tell him Justin Riggs says hello"</h2>
+  <p>The Aug 3 video is a screen recording of a comment made by the account <b>ldsabuseonx</b>, signed in Riggs's name. @ldsabuse posted it on X at 22:45. ldsabuseonx posted the same video at 22:44.</p></div>
+  <div class="pair">
+    <figure><img src="img/hello_x.jpg" alt="Frame from the X video showing the ldsabuseonx comment"><figcaption>X @ldsabuse · Aug 3 · 22:45</figcaption></figure>
+    <figure><img src="img/hello_ig.jpg" alt="Frame from the Instagram video showing the same comment"><figcaption>Instagram ldsabuseonx · Aug 3 · 22:44</figcaption></figure>
+  </div>
+  <p class="col muted">The handle of the person being replied to is blurred; they aren't part of this story.</p>
+</section>
+
+<section class="col">
+  <div class="eyebrow">Not matched</div>
+  <h2>Three posts had no match</h2>
+  <p>A 60-second reel (Aug 12), a 4-second clip with no speech (Aug 16) and a photo (Aug 20). The closest X media from those days is 18–25 away. One more X video (Aug 20) happened to have the same length as an Instagram reel; checked frame by frame against every reel, it is a different video.</p>
+  <p class="muted">Only his posts and replies from the same days were checked. A version posted on another day, or as a plain repost, wouldn't show up here.</p>
+</section>
+
+<section>
+  <div class="col"><div class="eyebrow">Result 2 · metadata</div>
+  <h2>What sets them apart</h2></div>
+  <figure><img src="img/fig1_volume.png" alt="Bar chart of posts per day: X far higher than Instagram on every one of the 7 days"><figcaption>Posts per day on the 7 days. X: posts and replies; Instagram: ldsabuseonx's own posts.</figcaption></figure>
+  <div class="tbl"><table>
+    <tr><th></th><th>X @ldsabuse</th><th>Instagram ldsabuseonx</th></tr>
+    <tr><td>Created</td><td>June 2017</td><td>June 2024</td></tr>
+    <tr><td>Size</td><td>32.9K posts, 6,462 followers</td><td>32 posts, 702 followers</td></tr>
+    <tr><td>Format</td><td>text, replies, links</td><td>edited clips with title cards</td></tr>
+    <tr><td>Riggs's main Instagram</td><td colspan="2">named <b>ldsabuse</b> (Instagram's own email in his Apr 12 X post)</td></tr>
+  </table></div>
+  <figure><img src="img/fig3_who_started.png" alt="Bar chart: 13 posts started by ldsabuseonx, 11 by theemmapreneurofficial, 8 by latterdaychad"><figcaption>Who started each post on ldsabuseonx's grid (owner field, forensic capture).</figcaption></figure>
+  <figure><img src="img/fig2_avatars.png" alt="Three profile pictures side by side: X, TikTok and Instagram, all different images"><figcaption>Three profile pictures, three different images. Faces in the Instagram collage are blurred.</figcaption></figure>
+</section>
+
+<section>
+  <div class="col"><div class="eyebrow">Reading</div><h2>What this does and doesn't show</h2></div>
+  <div class="verdict">
+    <div><h3>It shows</h3><p>Whoever runs ldsabuseonx had Riggs's own video files and posted them within minutes of him, 6 times on 5 days. That is Riggs or someone working directly with him; a copycat wouldn't keep that pace.</p></div>
+    <div><h3>It also shows</h3><p>It isn't simply his Instagram. His main account has another name, most of its grid (19 of 32) comes from posts two network accounts started, and it posts a fraction of what he does, in another format.</p></div>
+    <div><h3>It doesn't show</h3><p>Who types the posts on ldsabuseonx. That isn't visible from outside.</p></div>
+  </div>
+  <div class="callout col"><b>Prediction scored: lost.</b> "They share nothing" met six shared videos, posted minute for minute. In the loser's defense, they still don't share a profile picture, a name, a posting volume, or the network that fills most of ldsabuseonx's grid. That's a consolation prize, not a win.</div>
+</section>
+
+<section class="col">
+  <div class="eyebrow">Method</div>
+  <h2>How the test was run</h2>
+  <ul>
+    <li><b>X:</b> every post and reply by @ldsabuse on the 7 days (115), saved as X's public embed service returns them, plus 87 attached files.</li>
+    <li><b>Instagram:</b> a forensic capture of all 32 ldsabuseonx posts (captions, timestamps, co-authors, raw responses, hashes) and the video of its own posts.</li>
+    <li><b>Rules fixed in advance</b> in the script <code>bin/compare_x_ig.py</code> (mimesis toolkit). Words were left out by choice; files and metadata answered the question.</li>
+    <li><b>Chain of custody:</b> every file hashed when collected, re-hashed before each step, and logged with UTC times.</li>
+  </ul>
+  <h3>Corrections made along the way</h3>
+  <ul>
+    <li>An early note said the X and TikTok profile pictures were the same image. They are different photos on the same theme.</li>
+    <li>A first count guess (about 70 X posts on the 7 days) was too low: it was 115.</li>
+    <li>The headline prediction. See "The bet." We kept it in on purpose.</li>
+  </ul>
+</section>
+
+
+<section>
+  <div class="col"><span class="badge">Made with mimesis</span><h2 style="margin-top:10px">Run this test yourself</h2>
+  <p>mimesis is an open toolkit for comparing sources: transcripts, videos, posts. Everything on this page came from one script with a chain of custody built in.</p></div>
+  <div class="tool">
+    <div><b>Collect X posts</b><p class="muted">Saves each post exactly as served, plus its photos and videos, hashing every file.</p><code>compare_x_ig.py fetch-x CASE --ids ids.tsv
+compare_x_ig.py fetch-x-media CASE</code></div>
+    <div><b>Add Instagram</b><p class="muted">Copies a forensic capture and its media in, without touching the originals.</p><code>compare_x_ig.py add-ig CASE --capture DIR --media DIR…</code></div>
+    <div><b>Compare files</b><p class="muted">ffprobe and EXIF inventory, identical bytes, matching lengths, shared encoder tags. Re-hashes every input first.</p><code>compare_x_ig.py files CASE</code></div>
+    <div><b>Compare content</b><p class="muted">Image fingerprints, shared phrases and links, with a same-day vs other-day control. Rules fixed in code.</p><code>compare_x_ig.py compare CASE</code></div>
+  </div>
+  <p class="col muted">Code and tests: <a href="https://github.com/roadshowpractice/mimesis">github.com/roadshowpractice/mimesis</a> · this case's public data: <a href="data/">data/</a> · <a href="../../">the mimesis toolkit</a></p>
+</section>
+
+</div>
+</body></html>
