@@ -23,6 +23,10 @@ Steps (each one writes to CUSTODY.log):
                                        then cross-checks: identical bytes, same durations, shared encoder tags
   add-ig   CASE --capture DIR [--media DIR...]   copy (never move) the Instagram data in
   compare  CASE [--window-days 1]      offline. Re-checks every input hash first, stops on any mismatch
+  ledger   CASE [--out FILE]           offline. One row per Instagram post, keyed by its code (never by day):
+                                       own/collab, file on disk, best X match within +/-3 days, and a status.
+                                       Test lists come from this file, not retyped from a write-up (T4 lost a
+                                       post that way: Aug 12 had 2 posts, one matched, and the day got ticked off)
 
 Rules (THRESHOLDS below) are fixed before the comparison and written into out/manifest.json.
 Pair classes, strongest first:
@@ -670,6 +674,123 @@ def cmd_compare(a):
     print("\n".join(L[:14 + len(ORDER)]))
 
 
+# ---------- per-post ledger ----------
+
+LEDGER_RULE = {"window_days": 3, "len_tol_s": 0.2, "dhash_max": 5, "fracs": (0.3, 0.5, 0.7)}
+
+
+def _trim_black(img, sides_only):
+    import numpy as np
+    a = np.asarray(img.convert("L"))
+    cols, rows = np.where(a.max(axis=0) > 1)[0], np.where(a.max(axis=1) > 1)[0]
+    if not len(cols) or not len(rows):
+        return img
+    y0, y1 = (0, a.shape[0]) if sides_only else (rows.min(), rows.max() + 1)
+    return img.crop((cols.min(), y0, cols.max() + 1, y1))
+
+
+def _frame(video, t):
+    from io import BytesIO
+    from PIL import Image
+    raw = subprocess.check_output(["ffmpeg", "-v", "error", "-ss", "{:.3f}".format(t), "-i", str(video),
+                                   "-frames:v", "1", "-f", "image2pipe", "-vcodec", "png", "-"])
+    return Image.open(BytesIO(raw))
+
+
+def _video_print(video):
+    """length, and dHash at 30/50/70% raw and with pure-black side bars trimmed (Instagram pads tall video, T3)"""
+    d = float((probe(video).get("format") or {}).get("duration") or 0)
+    frames = [_frame(video, d * f) for f in LEDGER_RULE["fracs"]]
+    return d, [dhash(f) for f in frames], [dhash(_trim_black(f, True)) for f in frames]
+
+
+def cmd_ledger(a):
+    from PIL import Image
+    case = Path(a.case)
+    R = LEDGER_RULE
+    pdt = timezone(timedelta(hours=THRESHOLDS["tz_offset_hours"]))
+    xs = []
+    for raw in sorted((case / "x" / "raw").glob("*.json")):
+        d = json.loads(raw.read_bytes())
+        if ((d.get("user") or {}).get("screen_name") or "").lower() != a.x_account.lower():
+            continue
+        ts = datetime.strptime(d["created_at"].replace(".000Z", "Z"), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+        files = sorted((case / "x" / "media").glob("{}_*".format(raw.stem)))
+        vids = [f for f in files if f.suffix == ".mp4"]
+        photos = [f for f in files if f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")
+                  and f.stem not in {v.stem for v in vids}]
+        xs.append({"id": raw.stem, "day": ts.astimezone(pdt).date(), "vids": vids, "photos": photos})
+    x_days = {i["day"] for i in xs}
+    vcache = {}
+
+    def vp(p):
+        if p not in vcache:
+            vcache[p] = _video_print(p)
+        return vcache[p]
+
+    rows = []
+    for line in (case / "ig" / "capture" / "posts.jsonl").read_text(encoding="utf-8").splitlines():
+        p = json.loads(line)
+        code = p["code"]
+        day = datetime.fromtimestamp(p["taken_at"], timezone.utc).astimezone(pdt).date()
+        mdir = case / "ig" / "media" / code
+        mp4 = sorted(mdir.glob("*.mp4")) if mdir.exists() else []
+        img = sorted(f for f in mdir.glob("*") if f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")) if mdir.exists() else []
+        win_days = {day + timedelta(k) for k in range(-R["window_days"], R["window_days"] + 1)}
+        covered = len(win_days & x_days)
+        win = [i for i in xs if i["day"] in win_days]
+        row = {"code": code, "day_pdt": day.isoformat(), "own": "own" if p.get("owner") == a.account else "collab",
+               "owner": p.get("owner"), "ig_media": "video" if mp4 else ("photo" if img else "none"),
+               "x_days_with_data": "{}/{}".format(covered, len(win_days)), "best_x": "", "len_diff_s": "",
+               "dhash_raw": "", "dhash_sides_trimmed": "", "status": ""}
+        best = None
+        if mp4:
+            L, H, Ht = vp(mp4[0])
+            for i in win:
+                for v in i["vids"]:
+                    xl, xh, xht = vp(v)
+                    raw_d, trim_d = max(hamming(q, r) for q, r in zip(H, xh)), max(hamming(q, r) for q, r in zip(Ht, xht))
+                    key = (min(raw_d, trim_d), abs(xl - L))
+                    if best is None or key < best[0]:
+                        best = (key, i["id"], abs(xl - L), raw_d, trim_d)
+            if best:
+                row.update(best_x=best[1], len_diff_s="{:.2f}".format(best[2]), dhash_raw=best[3], dhash_sides_trimmed=best[4])
+                hit = best[2] <= R["len_tol_s"] and min(best[3], best[4]) <= R["dhash_max"]
+        elif img:
+            h = dhash(_trim_black(Image.open(img[0]), False))
+            for i in win:
+                for ph in i["photos"]:
+                    dd = hamming(h, dhash(_trim_black(Image.open(ph), False)))
+                    if best is None or dd < best[0]:
+                        best = (dd, i["id"])
+            if best:
+                row.update(best_x=best[1], dhash_raw=best[0])
+                hit = best[0] <= R["dhash_max"]
+        if row["ig_media"] == "none":
+            row["status"] = "NO FILE"
+        elif covered == 0:
+            row["status"] = "NOT SEARCHED"
+        elif best and hit:
+            row["status"] = "MATCHED"
+        else:
+            row["status"] = "UNMATCHED" if covered == len(win_days) else "UNMATCHED (partial X coverage)"
+        rows.append(row)
+    out = Path(a.out) if a.out else case / "out" / "ig_ledger.tsv"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    cols = list(rows[0])
+    with open(out, "w", encoding="utf-8") as f:
+        f.write("# rule: " + json.dumps(LEDGER_RULE) + " ; video MATCHED = len diff <= len_tol_s and dHash (raw or side-bars-trimmed) <= dhash_max at every frac\n")
+        f.write("\t".join(cols) + "\n")
+        for r in sorted(rows, key=lambda r: (r["day_pdt"], r["code"])):
+            f.write("\t".join(str(r[c]) for c in cols) + "\n")
+    custody(case, "ledger", "{} Instagram posts, {} X posts".format(len(rows), len(xs)), out)
+    from collections import Counter
+    for kind in ("own", "collab"):
+        sel = [r for r in rows if r["own"] == kind]
+        print("{:6s} {:3d}  {}".format(kind, len(sel), ", ".join("{} {}".format(n, s) for s, n in sorted(Counter(r["status"] for r in sel).items()))))
+    print("wrote", out)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -693,10 +814,15 @@ def main(argv=None):
     c.add_argument("--x-account", default="ldsabuse")
     c.add_argument("--window-days", type=int, default=1)
     c.add_argument("--own-only", action="store_true", help="only Instagram posts the account started itself")
+    lg = sub.add_parser("ledger")
+    lg.add_argument("case")
+    lg.add_argument("--account", default="ldsabuseonx")
+    lg.add_argument("--x-account", default="ldsabuse")
+    lg.add_argument("--out", help="default: CASE/out/ig_ledger.tsv")
     a = ap.parse_args(argv)
     Path(a.case).mkdir(parents=True, exist_ok=True)
     {"fetch-x": cmd_fetch_x, "fetch-x-media": cmd_fetch_x_media, "files": cmd_files, "add-ig": cmd_add_ig,
-     "compare": cmd_compare}[a.cmd](a)
+     "compare": cmd_compare, "ledger": cmd_ledger}[a.cmd](a)
 
 
 if __name__ == "__main__":

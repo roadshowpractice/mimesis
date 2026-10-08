@@ -100,3 +100,31 @@ def test_files_inventory_finds_identical_and_durations(tmp_path):
     assert "Byte-identical files on both sides: **1**" in rep
     assert "same duration (within 0.5s): **1**" in rep
     assert (case / "out" / "files.csv").read_text().count("\n") == 4
+
+
+def test_ledger_keeps_every_post_on_a_matched_day(tmp_path):
+    """the T4 slip: Aug 12 had 2 own posts, one matched, and the unmatched one fell off a hand-typed list.
+    The ledger has one row per post code, so a matched day can't hide an unmatched post."""
+    import numpy as np
+    from PIL import Image
+    rng = np.random.default_rng(0)
+    pics = [Image.fromarray(rng.integers(0, 255, (120, 160, 3), dtype=np.uint8)) for _ in range(2)]
+    case = _case(tmp_path, [
+        {"code": "SAME", "owner": "acct", "taken_at": 1786560000, "caption": ""},
+        {"code": "OTHER", "owner": "acct", "taken_at": 1786561000, "caption": ""},   # same PDT day
+        {"code": "COLLAB", "owner": "someone", "taken_at": 1786561000, "caption": ""},
+    ])
+    for code, pic in (("SAME", pics[0]), ("OTHER", pics[1])):
+        (case / "ig" / "media" / code).mkdir()
+        pic.save(case / "ig" / "media" / code / (code + ".jpg"), quality=95)
+    (case / "x" / "raw" / "9.json").write_text(json.dumps(
+        {"id_str": "9", "created_at": "2026-08-12T20:00:00.000Z", "user": {"screen_name": "xacct"}}))
+    pics[0].save(case / "x" / "media" / "9_0.jpg", quality=80)          # X has only the first picture
+    out = case / "out" / "ledger.tsv"
+    cxi.main(["ledger", str(case), "--account", "acct", "--x-account", "xacct", "--out", str(out)])
+    lines = [l for l in out.read_text().splitlines() if not l.startswith("#")]
+    rows = {r["code"]: r for r in (dict(zip(lines[0].split("\t"), l.split("\t"))) for l in lines[1:])}
+    assert set(rows) == {"SAME", "OTHER", "COLLAB"}
+    assert rows["SAME"]["status"] == "MATCHED" and rows["SAME"]["best_x"] == "9"
+    assert rows["OTHER"]["status"].startswith("UNMATCHED")   # only 1 of 7 window days has X data -> "partial"
+    assert rows["COLLAB"]["own"] == "collab" and rows["COLLAB"]["status"] == "NO FILE"
