@@ -46,6 +46,12 @@ Grok's reply, 2026-10-10 19:39:48 UTC, verbatim:
    twins of the same posts, and the source accounts' own public posts. New code only where those fall short.
 4. Code and decision rules are published before they run. The commit time is the timestamp.
 5. Same data for all three. Every source is linked, with its date, and every file we keep is hashed.
+6. **Closed world: only our holdings decide.** The data that counts is exactly what we held on 2026-10-10 at the
+   time of this commit, listed with sha256 in [`holdings_sha256.txt`](holdings_sha256.txt) (742 files: dl_wm metadata
+   for 643 downloads, our recent downloads and scrapes, and our capture of his Facebook page). Nothing fetched later
+   counts, and neither does anything on drives that weren't connected (our archive USB included).
+7. **No pixels at all,** not even to look for earlier copies: no frame fingerprints or perceptual hashes. Matching is
+   done with dates, lengths, captions, credits, handles and labels only.
 
 **Changed 2026-10-10, before anything ran:** the first version of this README (commit `201347e`) scored with Round 3's
 pixel detectors (`genai_count.py`). John: those give false positives on compressed, stylized video. The detectors
@@ -57,7 +63,7 @@ For each post, follow the material back to its earliest source we can find, usin
 
 - **Credits and labels already on the post:** caption credits, on-screen account handles and dates (read as text,
   as a viewer would), music tags, Instagram's own "AI info" / "Made with AI" label if shown.
-- **Earlier copies:** the same material posted before Tim's post, by the credited accounts or anyone else, with dates.
+- **Earlier copies:** the same material posted before Tim's post, found in our holdings by date, length, caption or credit.
 - **The source account itself:** what it says it is (bio, its other posts), e.g. an AI-art account, a church, a
   news outlet, a person filming an event.
 - **Tim's own side:** the Facebook twin, its music tag, and anything Tim says about where the footage came from.
