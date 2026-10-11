@@ -1,0 +1,162 @@
+{
+  "made_at": "2026-10-11T21:18:57Z",
+  "threshold": 5,
+  "fps": 5.0,
+  "coarse_scales": [
+    1.0,
+    0.95,
+    0.9,
+    0.85,
+    0.8,
+    0.75,
+    0.7,
+    0.65,
+    0.6,
+    0.55,
+    0.5,
+    0.45,
+    0.4,
+    0.35,
+    0.3,
+    0.25
+  ],
+  "coarse_step_px": 4,
+  "fine": "+-4 px, +-5% size around top 3",
+  "frame_size": [
+    320,
+    180
+  ],
+  "stills": {
+    "left": "40,0,285,608",
+    "right": "810,0,1075,500"
+  },
+  "videos": [
+    {
+      "label": "B1",
+      "path": "docs/cases/ldsabuse-twins/left_right/inputs/B1_Dbed4OEN_9d.mp4",
+      "sha256": "3548830115bfc2e77dfbd33fb7799a1b1952cfea45fb15e8621a3fd2c4e684da",
+      "frames": 219,
+      "stills": {
+        "left": {
+          "region_best": [
+            8,
+            26.6,
+            [
+              267.0,
+              68.0,
+              18.1,
+              45.0
+            ]
+          ],
+          "region_first_match_s": null,
+          "whole_best": [
+            37,
+            15.6
+          ]
+        },
+        "right": {
+          "region_best": [
+            12,
+            26.6,
+            [
+              280.0,
+              70.0,
+              22.7,
+              42.8
+            ]
+          ],
+          "region_first_match_s": null,
+          "whole_best": [
+            27,
+            9.6
+          ]
+        }
+      }
+    },
+    {
+      "label": "B2",
+      "path": "docs/cases/ldsabuse-twins/left_right/inputs/B2_Dbm17ScJJmq.mp4",
+      "sha256": "a139d831523358bea65e3f4e33c49849095dbc5ec43a5b982986415985237f01",
+      "frames": 90,
+      "stills": {
+        "left": {
+          "region_best": [
+            17,
+            10.0,
+            [
+              36.0,
+              71.0,
+              25.7,
+              63.8
+            ]
+          ],
+          "region_first_match_s": null,
+          "whole_best": [
+            39,
+            13.6
+          ]
+        },
+        "right": {
+          "region_best": [
+            15,
+            3.2,
+            [
+              72.0,
+              64.0,
+              37.7,
+              71.1
+            ]
+          ],
+          "region_first_match_s": null,
+          "whole_best": [
+            25,
+            9.0
+          ]
+        }
+      }
+    },
+    {
+      "label": "B3",
+      "path": "docs/cases/ldsabuse-twins/left_right/inputs/B3_Db6ohLRp-rK.mp4",
+      "sha256": "84eca0d791840e620ce6f856bbd5a307be84f714533ef18b5162eb2f5344f4a1",
+      "frames": 262,
+      "stills": {
+        "left": {
+          "region_best": [
+            10,
+            9.4,
+            [
+              91.0,
+              69.0,
+              17.7,
+              43.9
+            ]
+          ],
+          "region_first_match_s": null,
+          "whole_best": [
+            23,
+            32.6
+          ]
+        },
+        "right": {
+          "region_best": [
+            11,
+            32.8,
+            [
+              133.0,
+              10.0,
+              59.7,
+              112.6
+            ]
+          ],
+          "region_first_match_s": null,
+          "whole_best": [
+            23,
+            32.8
+          ]
+        }
+      }
+    }
+  ],
+  "matches": []
+}
