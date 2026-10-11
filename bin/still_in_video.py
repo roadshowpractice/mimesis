@@ -7,6 +7,7 @@ left and a host photo on the right. Which one shows up first in the episode itse
 One command does the whole test, so anyone can repeat it:
 
   still_in_video.py CASE --url VIDEO_URL --thumb THUMB.jpg --still left=40,0,285,608 --still right=810,0,1075,500
+  still_in_video.py CASE --video B1=a.mp4 --video B2=b.mp4 --fps 5 --thumb ... --still ...   (videos already on disk)
 
 Steps (each logged to CASE/CUSTODY.log with sha256):
   1. fetch   download the video with yt-dlp into CASE/derived/video/ (skipped if already there; hash checked)
@@ -87,16 +88,16 @@ def cut_stills(case, thumb, specs):
     return out
 
 
-def frames(video):
-    """yield (second, grayscale float array HxW) at 1 frame per second"""
-    p = subprocess.Popen(["ffmpeg", "-v", "error", "-i", str(video), "-vf", f"fps=1,scale={W}:{H},format=gray",
+def frames(video, fps=1.0):
+    """yield (seconds into the video, grayscale float array HxW), fps frames per second"""
+    p = subprocess.Popen(["ffmpeg", "-v", "error", "-i", str(video), "-vf", f"fps={fps},scale={W}:{H},format=gray",
                           "-f", "rawvideo", "-"], stdout=subprocess.PIPE)
     t = 0
     while True:
         buf = p.stdout.read(W * H)
         if len(buf) < W * H:
             break
-        yield t, np.frombuffer(buf, np.uint8).reshape(H, W).astype(np.float64)
+        yield round(t / fps, 2), np.frombuffer(buf, np.uint8).reshape(H, W).astype(np.float64)
         t += 1
     p.wait()
 
@@ -154,13 +155,13 @@ def fine(I, bits, cx, cy, w0, h0):
     return best
 
 
-def search(stills, video, maxd):
+def search(stills, video, maxd, fps=1.0):
     sb = {n: image_bits(Image.open(p)) for n, p in stills.items()}
     grids = {n: window_grid(Image.open(p).size[0] / Image.open(p).size[1]) for n, p in stills.items()}
     best = {n: {"whole": (99, None), "region": (99, None, None)} for n in stills}
     first = {n: {"whole": None, "region": None} for n in stills}
     n = 0
-    for t, g in frames(video):
+    for t, g in frames(video, fps):
         n += 1
         I = integral(g)
         whole = grid_bits(I, np.array([0.0]), np.array([0.0]), W, H)[0]
@@ -186,42 +187,56 @@ def search(stills, video, maxd):
             if bd <= maxd and first[name]["region"] is None:
                 first[name]["region"] = t
         if n % 600 == 0:
-            print(f"  {n // 60} min of video scanned", flush=True)
+            print(f"  {n} frames scanned", flush=True)
     return n, best, first
 
 
 def hms(t):
-    return "—" if t is None else f"{t // 3600}:{t % 3600 // 60:02d}:{t % 60:02d}"
+    if t is None:
+        return "—"
+    t = float(t); return f"{int(t // 3600)}:{int(t % 3600 // 60):02d}:{t % 60:05.2f}"
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("case"); ap.add_argument("--url", required=True); ap.add_argument("--thumb", required=True)
+    ap.add_argument("case"); ap.add_argument("--thumb", required=True)
+    ap.add_argument("--url", help="download this video first (step 1) and search it")
+    ap.add_argument("--video", action="append", default=[], help="label=path of a video already on disk (repeatable)")
     ap.add_argument("--still", action="append", required=True, help="name=x0,y0,x1,y1 box in the thumbnail")
     ap.add_argument("--max", type=int, default=5, help="dHash match threshold (default 5, as in T4)")
+    ap.add_argument("--fps", type=float, default=1.0, help="frames sampled per second of video (default 1)")
+    ap.add_argument("--out", default="still_in_video", help="report folder name under CASE/out/")
     ap.add_argument("--ytdlp", default="yt-dlp")
     a = ap.parse_args(argv)
     case = Path(a.case)
-    video = fetch(case, a.url, a.ytdlp)
+    videos = []
+    if a.url:
+        videos.append((a.url, fetch(case, a.url, a.ytdlp)))
+    for v in a.video:
+        label, path = v.split("=", 1); path = Path(path)
+        custody(case, "still_in_video input", f"video {label}", path); videos.append((label, path))
+    if not videos:
+        sys.exit("give --url and/or --video")
     stills = cut_stills(case, a.thumb, a.still)
-    nframes, best, first = search(stills, video, a.max)
-    out = case / "out" / "still_in_video"; out.mkdir(parents=True, exist_ok=True)
-    res = dict(made_at=utc_now(), url=a.url, video_sha256=sha256_file(video), frames_scanned=nframes, threshold=a.max,
-               coarse_scales=SCALES, coarse_step_px=STEP, fine="+-4 px, +-5% size around top 3", frame_size=[W, H],
-               stills={n: dict(box=[s for s in a.still if s.startswith(n + "=")][0].split("=")[1],
-                               whole_best=best[n]["whole"], whole_first_match_s=first[n]["whole"],
-                               region_best=best[n]["region"], region_first_match_s=first[n]["region"]) for n in stills})
-    for mode in ("whole", "region"):
-        hits = {n: first[n][mode] for n in stills if first[n][mode] is not None}
-        res[f"{mode}_first"] = min(hits, key=hits.get) if hits else None
+    out = case / "out" / a.out; out.mkdir(parents=True, exist_ok=True)
+    res = dict(made_at=utc_now(), threshold=a.max, fps=a.fps, coarse_scales=SCALES, coarse_step_px=STEP,
+               fine="+-4 px, +-5% size around top 3", frame_size=[W, H],
+               stills={n: [s for s in a.still if s.startswith(n + "=")][0].split("=")[1] for n in stills}, videos=[])
+    md = [f"# Stills in videos ({utc_now()})", "", f"{a.fps:g} frames per second, match = dHash <= {a.max} (region search; whole frame shown too).", "",
+          "| Video | Frames | Still | Region: best distance (at) | first match | Whole frame: best |", "|---|---|---|---|---|---|"]
+    for label, video in videos:
+        print(f"searching {label}: {video}", flush=True)
+        nframes, best, first = search(stills, video, a.max, a.fps)
+        res["videos"].append(dict(label=label, path=str(video), sha256=sha256_file(video), frames=nframes,
+                                  stills={n: dict(region_best=best[n]["region"], region_first_match_s=first[n]["region"],
+                                                  whole_best=best[n]["whole"]) for n in stills}))
+        for n in stills:
+            r = best[n]["region"]
+            md.append(f"| {label} | {nframes} | {n} | {r[0]} ({hms(r[1])}) | {hms(first[n]['region'])} | {best[n]['whole'][0]} |")
+    found = [(v["label"], n) for v in res["videos"] for n, d in v["stills"].items() if d["region_first_match_s"] is not None]
+    res["matches"] = found
+    md += ["", "**Matches (dHash <= {}):** {}".format(a.max, ", ".join(f"{n} in {l}" for l, n in found) if found else "none"), ""]
     (out / "result.json").write_text(json.dumps(res, indent=2) + "\n")
-    md = [f"# Stills in the video: {a.url}", "", f"{nframes} frames (1 per second), match = dHash <= {a.max}.", "",
-          "| Still | Whole frame: best (at) | first match | Region search: best (at) | first match |", "|---|---|---|---|---|"]
-    for n in stills:
-        w, r = best[n]["whole"], best[n]["region"]
-        md.append(f"| {n} | {w[0]} ({hms(w[1])}) | {hms(first[n]['whole'])} | {r[0]} ({hms(r[1])}) | {hms(first[n]['region'])} |")
-    md += ["", f"**First, whole-frame rule:** {res['whole_first'] or 'neither still matches'}  ",
-           f"**First, region search:** {res['region_first'] or 'neither still matches'}", ""]
     (out / "result.md").write_text("\n".join(md))
     custody(case, "still_in_video report", "wrote", out / "result.json")
     custody(case, "still_in_video report", "wrote", out / "result.md")
