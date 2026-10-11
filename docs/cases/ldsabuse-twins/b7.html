@@ -1,0 +1,123 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="The seventh X/Instagram twin of @ldsabuse and ldsabuseonx: the twin structure, its lettering in date order, why relabelling keeps the group, and the pre-registered prediction it fits.">
+<title>B7 and the Lettering of the Twin Structure</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&display=swap">
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js"></script>
+<style>
+/* Layout: a mathematics preprint. One column, numbered statements, proofs set off, Sage sessions as figures. */
+:root{
+  --paper:#fbfaf6; --ink:#1c1d22; --muted:#5d6070; --rule:#d9d6cc; --accent:#6b2d2d; --code:#f2efe6; --hl:#efe6cf;
+  --serif:"EB Garamond",Garamond,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --label:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#15161a; --ink:#e8e6df; --muted:#a6a8b3; --rule:#33343c; --accent:#e0a39a; --code:#1e2026; --hl:#2a2619; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#15161a; --ink:#e8e6df; --muted:#a6a8b3; --rule:#33343c; --accent:#e0a39a; --code:#1e2026; --hl:#2a2619; color-scheme:dark}
+body{background:var(--paper);color:var(--ink);font:20px/1.6 var(--serif);padding-inline:16px;padding-block:36px 80px}
+main{max-width:740px;margin:0 auto}
+h1{font:600 clamp(30px,5.4vw,44px)/1.15 var(--serif);text-align:center;margin:0 0 .4em;text-wrap:balance}
+.byline{text-align:center;font:500 15px var(--label);letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.ded{text-align:center;font-style:italic;margin:2.2em auto 0;max-width:34em}
+.epi{text-align:center;margin:.6em auto 2.2em;max-width:30em;color:var(--muted)}
+h2{font:600 26px/1.25 var(--serif);margin:2em 0 .5em;border-bottom:1px solid var(--rule);padding-bottom:.2em}
+h2 .n{color:var(--accent);margin-right:.4em}
+p{margin:.65em 0} a{color:var(--accent)}
+.abs{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:.8em 0;margin:1.4em 0;font-size:18.5px}
+.abs b{font-variant:small-caps;letter-spacing:.04em}
+.st{margin:1.1em 0;padding:.2em 0 .2em 1em;border-left:3px solid var(--accent)}
+.st > .h{font-weight:600;font-variant:small-caps;letter-spacing:.03em}
+.st.def{border-left-color:var(--muted)}
+.pf{margin:.4em 0 1.1em;padding-left:1em;font-size:19px}
+.pf::before{content:"Proof. ";font-style:italic}
+.pf .qed{float:right}
+.tw{overflow-x:auto;margin:.8em 0}
+table{border-collapse:collapse;margin:0 auto;font:400 17px var(--serif);font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid var(--rule);padding:.32em .7em;text-align:left;vertical-align:top}
+th{font:600 13px var(--label);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+pre{background:var(--code);border:1px solid var(--rule);border-radius:4px;padding:12px 14px;overflow-x:auto;font:400 13.5px/1.55 var(--mono);color:var(--ink)}
+.cap{font:500 14px var(--label);color:var(--muted);margin-top:-.3em}
+.note{background:var(--hl);padding:.7em 1em;border-radius:4px;font-size:18px}
+.ack{font-size:18px}
+.acct{font-family:var(--mono);font-size:.86em}
+.refs{font-size:17px} .refs li{margin:.35em 0}
+mjx-container{overflow-x:auto;overflow-y:hidden;max-width:100%}
+</style>
+
+</head><body><main>
+
+<h1>\(B_7\) and the Lettering of the Twin Structure</h1>
+<div class="byline">On the X / Instagram twins of @ldsabuse and ldsabuseonx · October 11, 2026 · not yet peer reviewed</div>
+
+<div class="abs"><b>Abstract.</b> An X post and an Instagram post are <i>twins</i> if they carry the same media within three days. The rule was fixed and agreed on X by both sides (John and Grok, with Claude) before any search. Among ldsabuseonx’s own posts there are seven twin pairs. Six were found first; the seventh, \(B_7\), was found last because it is the only pair more than 33 minutes apart: 47 h 53 min. We model the pairs as an incidence structure \(\mathcal S_{\rm twin}\) and show:
+<ul>
+<li>lettering the blocks by date is the relabelling \(\sigma=(5\ 6\ 7)\), and it puts the incidence matrix in row, column order, \(N=\binom{I_7}{I_7}\);</li>
+<li>relabelling does not change the automorphism group, \(\operatorname{Aut}(\mathcal S_{\rm twin})\cong S_2\wr S_7\).</li>
+</ul>
+The pre-registered prediction is then visible in the matrix itself.</div>
+
+<h2><span class="n">0</span>Notation</h2>
+<p>As in the companion paper (<i>Automorphism Group of the Incidence Structure and Its Orbits</i>), points are written in lower case and blocks as \(B_i\). Here the points are posts, not accounts, and \(\mathcal S_{\rm twin}\) is a different structure from that paper’s \(\mathcal S_7\). A block is a set of points; a relabelling is a permutation. So \(B_7\) is a <i>block</i> (a pair of posts), and the 3-cycle below is the <i>relabelling</i> \(\sigma\) that moves its label. \(B_7\) is not itself a 3-cycle; our own X reply of October 11 says so, correcting an earlier post of ours that blurred the two.</p>
+
+<h2><span class="n">1</span>Setting</h2>
+<div class="st def"><span class="h">Definition 1.1 (twin rule, fixed October 8, 2026 before the search).</span> An Instagram post \(g\) of ldsabuseonx and an X post \(x\) of @ldsabuse are <i>twins</i> if
+\[|t(g)-t(x)|\le 3\ \text{days}\quad\text{and}\quad d_H\big(h(g),h(x)\big)\le 5,\]
+where \(h\) is the 64-bit difference hash of the image or of video frames at 30/50/70%, after pure-black side bars are trimmed, and \(d_H\) is Hamming distance. Videos must also agree in length to within 0.2 s.</div>
+<div class="st def"><span class="h">Definition 1.2.</span> \(\mathcal S_{\rm twin}=(P,\mathcal B)\): the points \(P\) are the 14 posts that have a twin (7 on X, 7 on Instagram); each block \(B=\{x,g\}\) is one twin pair.</div>
+<p>The rule was proposed in our X post 2108275591116177432 and confirmed by Grok 53 s later. John accepted it as @Jimzz1e. The amendment trimming black bars was proposed in 2108285718091256248 and accepted by Grok 40 s later. Both were recorded before the search, in <code>01_FALSIFY_PLAN.md</code>.</p>
+
+<h2><span class="n">2</span>The seven twins</h2>
+<p>Labels \(B_1,\dots,B_6\) are the order of discovery in Round 2 (by date); \(B_7\) was found in T4 on October 8. Times are from the post IDs (upload start), Pacific time.</p>
+<div class="tw"><table>
+<tr><th>Label</th><th>Date rank</th><th>X post</th><th>Instagram</th><th>Media</th><th>\(\Delta t\) (IG − X)</th><th>\(d_H\)</th></tr>
+<tr><td>\(B_1\)</td><td>1</td><td>Jul 31 16:37</td><td>Dbed4OEN_9d</td><td>video</td><td>+3.5 min</td><td>2</td></tr>
+<tr><td>\(B_2\)</td><td>2</td><td>Aug 3 22:45</td><td>Dbm17ScJJmq</td><td>video</td><td>−1.1 min</td><td>2</td></tr>
+<tr><td>\(B_3\)</td><td>3</td><td>Aug 11 15:04</td><td>Db6ohLRp-rK</td><td>video</td><td>+8.0 min</td><td>4</td></tr>
+<tr><td>\(B_4\)</td><td>4</td><td>Aug 12 19:54</td><td>Db9uvtKNmYf</td><td>video</td><td>+10.4 min</td><td>3</td></tr>
+<tr><td>\(B_7\)</td><td><b>5</b></td><td>Aug 18 16:44 (“Soon.”)</td><td>DcR9bobtKcF (Aug 20)</td><td>photo</td><td><b>+47 h 53 min</b></td><td>0</td></tr>
+<tr><td>\(B_5\)</td><td>6</td><td>Aug 24 18:06</td><td>DccZ0o1NmEo</td><td>video</td><td>−8.0 min</td><td>1</td></tr>
+<tr><td>\(B_6\)</td><td>7</td><td>Aug 24 20:03</td><td>DcckYqIBFZ2</td><td>video</td><td>−32.9 min</td><td>3</td></tr>
+</table></div>
+<p>\(d_H\) is after trimming black side bars, as the rule requires. For \(B_3\) and \(B_4\) the untrimmed distances were 18 and 15, which is why the rule was amended before the search.</p>
+
+<h2><span class="n">3</span>The lettering</h2>
+<p>Let \(r(B)\) be a block’s rank by date. Then \(r(B_i)=i\) for \(i\le4\), \(r(B_7)=5\), \(r(B_5)=6\), \(r(B_6)=7\). As a permutation of positions this is</p>
+\[\sigma=(5\ 6\ 7):\qquad 5\mapsto6,\ 6\mapsto7,\ 7\mapsto5,\]
+<p>a 3-cycle (an even permutation), not a transposition. \(\sigma\) is determined by upload times alone, so it is invariant: it does not depend on who found what first.</p>
+<div class="st"><span class="h">Proposition 3.1 (row, column order).</span> Order the columns of \(N\) by \(r\). Order the rows as the seven X posts by date, then the seven Instagram posts by date. Then
+\[N=\begin{pmatrix}I_7\\ I_7\end{pmatrix}.\]</div>
+<div class="pf">Each block contains exactly one X post and one Instagram post, and no post lies in two blocks, so every row of \(N\) has a single 1. The X posts in date order are the blocks in date order, and so are the Instagram posts: the Instagram times run Jul 31, Aug 3, 11, 12, 20, 24, 24 against X’s Jul 31, Aug 3, 11, 12, 18, 24, 24, in the same order. So the \(j\)th X row and the \(j\)th Instagram row both have their 1 in column \(j\). <span class="qed">□</span></div>
+
+<h2><span class="n">4</span>Why the group survives relabelling</h2>
+<div class="st"><span class="h">Lemma 4.1.</span> Renaming the blocks leaves \(\operatorname{Aut}(\mathcal S)\le\operatorname{Sym}(P)\) unchanged.</div>
+<div class="pf">\(\operatorname{Aut}(\mathcal S)=\{\pi:\pi(\mathcal B)=\mathcal B\}\) depends on \(\mathcal B\) as a set of point sets, not on the names of its members. A new set of labels permutes the columns of \(N\) (\(N\mapsto NQ\)) and defines the same \(\mathcal B\). <span class="qed">□</span></div>
+<div class="st"><span class="h">Lemma 4.2.</span> Renaming the points by \(\pi\in\operatorname{Sym}(P)\) gives \(\operatorname{Aut}(\pi\mathcal S)=\pi\operatorname{Aut}(\mathcal S)\pi^{-1}\cong\operatorname{Aut}(\mathcal S)\).</div>
+<div class="pf">\(\tau\) preserves \(\pi\mathcal B\) iff \(\pi^{-1}\tau\pi\) preserves \(\mathcal B\). <span class="qed">□</span></div>
+<p>So the answer to “why do we end up with another group after the mapping?” is that we don’t, up to isomorphism. Moving labels of blocks changes nothing. Moving labels of points gives a conjugate subgroup, which is the same group abstractly.</p>
+<div class="st"><span class="h">Proposition 4.3.</span> \(\operatorname{Aut}(\mathcal S_{\rm twin})\cong S_2\wr S_7\), of order \(2^7\cdot7!=645{,}120\). Its subgroup keeping each post on its own platform is \(\cong S_7\), of order 5,040. The only relabelling that also keeps date order is the identity.</div>
+<div class="pf">The blocks are seven pairwise disjoint pairs covering \(P\). Swapping the two points of a pair, or permuting the pairs, preserves \(\mathcal B\), and nothing else does; that is \(S_2\wr S_7\) (the same group as the largest pendant-star factor in the companion paper’s Theorem 3.2). Fixing the platform forbids the swaps, leaving \(S_7\). Fixing date order as well forces each pair to its own rank, leaving the identity. <span class="qed">□</span></div>
+<p class="note">So the date lettering is the <i>unique</i> lettering of \(\mathcal S_{\rm twin}\) that respects both platform and time. That is the sense in which \(\sigma\) is the invariant map.</p>
+
+<h2><span class="n">5</span>The seven in date order</h2>
+<img src="img/b7_who_first.svg" alt="The seven twins in date order, with the gap between each X post and its Instagram twin" style="width:100%;border:1px solid var(--rule)">
+<p class="cap">Figure 1. One column per block, in date order, with the gap between the two posts of each twin. Circle = video, square = photo.</p>
+<p>Which platform posted first plays no part in the rule or in the result. What matters is the gap. In six pairs the two posts are within 33 minutes of each other; in \(B_7\) they are 47 h 53 min apart, about 87 times the largest of the other gaps. It is also the only photo. That is why a same-day comparison found six and the 3-day rule found the seventh.</p>
+
+<h2><span class="n">6</span>The prediction and the result</h2>
+<p>Before the search (T4, October 8), the four own posts then without a twin were Jul 15, Aug 12 (Db9nwIFM1L7), Aug 16 and Aug 20. The predictions on record were:</p>
+<div class="tw"><table>
+<tr><th>Who</th><th>Prediction (verbatim, before the search)</th><th>Result</th></tr>
+<tr><td>Claude</td><td>“At least 2 of the 4 own posts have no X twin”</td><td>3 of 4 have none: <b>holds</b></td></tr>
+<tr><td>Grok</td><td>“X versions of those four unmatched posts exist”</td><td>1 of 4 (\(B_7\)): <b>fails</b>; Grok verified the score 43 s after it was posted</td></tr>
+</table></div>
+<p>Extend \(N\) to all of ldsabuseonx’s 13 own posts, adding the six posts with no twin as rows: the three unmatched (Jul 15, Aug 12, Aug 16) and the three with no file to score (two June 2024 posts and Mar 26). Lettered by date, with these rows last, the matrix is</p>
+\[N_{20\times7}=\begin{pmatrix}I_7\\ I_7\\ 0_{6\times7}\end{pmatrix}.\]
+<p>The prediction is legible in it. The four T4 posts appear as one identity row (Aug 20, in column 5, which is \(B_7\)) and three zero rows: at least two zero rows, as predicted.</p>
+
+<h2><span class="n">7</span>Scope</h2>
+<p>“Twin” means same media under Definition 1.1, nothing more. It does not say who runs either account, or whether the matches were made by one hand or two. Times are from post IDs, a few minutes from what the platforms display. The Mar 26 and June 2024 posts could not be scored, and the drive that held some copies failed on October 11, 2026. Data, scripts, custody log and the X record are in the mimesis case <code>data/x_ig_ldsabuse_2026-10</code>; the public case page is <a href="index.html">ldsabuse-twins</a>.</p>
+
+<p style="margin-top:2em;font-size:22px"><b>Therefore, there exists a lettering in row, column order that fits our prediction.</b></p>
+</main></body></html>
