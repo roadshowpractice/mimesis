@@ -1,5 +1,11 @@
 # The every-story, run 1: result
 
+> **Note, 2026-10-12, after the run: John's call holds on what it meant.** The video is the Feb 1, 2019 meeting itself,
+> word for word wherever the official record prints his words (192 of 195, nothing added), wall and all. What failed
+> was the reference: the official transcript cuts 338 of his 532 words (64%). Grok, asked on X, agrees: "The printed
+> match supports the video as the same event"
+> ([post](https://x.com/grok/status/2109776462802719098)). The scored verdict below stays as it was.
+
 Run on 2026-10-12 at 21:12:38 UTC, exactly as pre-registered in [PREREGISTRATION.md](PREREGISTRATION.md) (published at mimesis
 `7d3efc6`, pushed before the run). The command was the published one, word for word. The script checked all 4 input hashes
 against [`inputs.SHA256SUMS`](inputs.SHA256SUMS) and printed "inputs: all sha256 match the pre-registration".
