@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="mimesis: forensic comparison of videos, pictures and transcripts. Every test is published before it runs. The cases so far.">
+<meta property="og:title" content="mimesis">
+<meta property="og:description" content="Forensic comparison of videos, pictures and transcripts. Every test is published before it runs.">
+<meta property="og:image" content="cases/ldsabuse-twins/img/og_card.png">
+<title>mimesis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+:root{--bg:#f6f7fb;--panel:#ffffff;--ink:#121726;--muted:#5a6378;--line:#dde2ee;--accent:#b98100;--blue:#2459b8;
+--display:"Space Grotesk",system-ui,sans-serif;--body:"Source Serif 4",Georgia,serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0f1a;--panel:#121a2b;--ink:#e8ecf4;--muted:#9aa4b8;--line:#243049;--accent:#f2c230;--blue:#7fb0ff}}
+:root[data-theme="dark"]{--bg:#0b0f1a;--panel:#121a2b;--ink:#e8ecf4;--muted:#9aa4b8;--line:#243049;--accent:#f2c230;--blue:#7fb0ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.6 var(--body)}
+main{max-width:46rem;margin:0 auto;padding:3rem 16px 4rem}
+.kicker{font:600 .8rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(2.6rem,9vw,4rem)/1 var(--display);margin:.3rem 0 .8rem}
+.lede{font-size:1.15rem;color:var(--muted);margin:0 0 2rem}
+h2{font:700 1.3rem var(--display);margin:2.4rem 0 .8rem}
+.case{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1.2rem 1.3rem;margin:0 0 1rem}
+.case h3{font:700 1.25rem var(--display);margin:0 0 .3rem}
+.case h3 a{color:var(--ink);text-decoration:none}
+.case h3 a:hover{color:var(--blue)}
+.case p{margin:.2rem 0 .6rem}
+.case ul{margin:.4rem 0 0;padding-left:1.1rem}
+.case li{margin:.25rem 0}
+a{color:var(--blue)}
+.status{display:inline-block;font:600 .72rem var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:.15rem .5rem;border-radius:99px;border:1px solid var(--line);color:var(--muted);margin-left:.4rem;vertical-align:middle}
+.status.done{color:var(--accent);border-color:var(--accent)}
+.how{color:var(--muted);font-size:1rem}
+footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--line);font:400 .85rem var(--mono);color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<div class="kicker">The Tim Ballard Defamation League</div>
+<h1>mimesis</h1>
+<p class="lede">Forensic comparison of videos, pictures and transcripts: what is the same, what was cut, and who posted it first. Every test is published before it runs, so nobody can move the goalposts afterwards.</p>
+
+<h2>Cases</h2>
+
+<div class="case">
+<h3><a href="cases/ldsabuse-twins/">The ldsabuse Twins</a> <span class="status done">published</span></h3>
+<p>Six times in four weeks, the same video landed on X @ldsabuse and Instagram ldsabuseonx, 1 to 30 minutes apart. A forensic file and metadata comparison.</p>
+<ul>
+<li><a href="cases/ldsabuse-twins/b7.html">B7 and the Lettering of the Twin Structure</a></li>
+<li>Left or right: <a href="cases/ldsabuse-twins/left_right/PREREGISTRATION.html">pre-registration</a> · <a href="cases/ldsabuse-twins/left_right/RESULT_run1.html">run 1 result: no match</a></li>
+<li><a href="cases/ldsabuse-twins/round3/">Round 3: provenance</a> (T5, Grok's test) <span class="status">pre-registered</span></li>
+</ul>
+</div>
+
+<div class="case">
+<h3><a href="cases/genai-count/">How many of the 5 posts are Gen-AI fakes?</a> <span class="status">open</span></h3>
+<p>@timballard89's five Instagram posts of Oct 7, 2026. Predictions and decision rules were locked before anything runs; results go below them, and the pre-registration stays unchanged.</p>
+</div>
+
+<h2>How we work</h2>
+<p class="how">Inputs are hashed and published with the code and the decision rule; the commit time is the timestamp. Then the published command runs, word for word, and the result goes in its own file. The code is in the <a href="https://github.com/roadshowpractice/mimesis">mimesis repository</a>.</p>
+
+<footer>roadshowpractice.github.io/mimesis</footer>
+</main>
+</body>
+</html>
