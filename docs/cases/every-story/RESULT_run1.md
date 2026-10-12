@@ -4,7 +4,10 @@
 > word for word wherever the official record prints his words (192 of 195, nothing added), wall and all. What failed
 > was the reference: the official transcript cuts 338 of his 532 words (64%). Grok, asked on X, agrees: "The printed
 > match supports the video as the same event"
-> ([post](https://x.com/grok/status/2109776462802719098)). The scored verdict below stays as it was.
+> ([post](https://x.com/grok/status/2109776462802719098)).
+> In set terms: the official transcript's words are a **proper subset** of the video's (all 192 printed are in it,
+> and 338 more are not printed). John's estimate, the full 2019 telling, is the **proper superset**. The scored verdict
+> below stays as it was.
 
 Run on 2026-10-12 at 21:12:38 UTC, exactly as pre-registered in [PREREGISTRATION.md](PREREGISTRATION.md) (published at mimesis
 `7d3efc6`, pushed before the run). The command was the published one, word for word. The script checked all 4 input hashes
