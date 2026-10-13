@@ -83,6 +83,22 @@ So both videos are cut by **the same splitter with the same settings** (`dl_wm` 
   setting and clip 3 in its desk setting. The setting is read off the splitter's own screenshots of those episode scenes,
   which also makes the visual check (addendum 1) scene to scene.
 
+## Addendum 3, 2026-10-12, before anything ran: the dataset is Candace's scenes (John)
+
+John: the episode dataset "should have Candace's face". That is how the data will line up, scene for scene, so the
+times can be interpolated.
+
+- After the episode is split (addendum 2), every episode scene gets one label from its splitter screenshot:
+  **Candace on screen** or **not** (ads, other people, graphics). The labels are made from contact sheets **before any
+  words are lined up**, and they are published with the result.
+- **The dataset is the Candace scenes only.** The line-up and the per-clip 80% rule run against those.
+- **Check:** the line-up also runs once on the full episode. Both runs should find the same clips; if not, the result
+  says so.
+- **Interpolation:** where a post clip lands in an episode scene, the two scenes' cut points give a time map that does
+  not depend on the words. Between matched words, post time is mapped to episode time by interpolating between those
+  cut points. This is reported with the result (where each clip sits in the episode, to the second). It does not change
+  the 80% rule.
+
 ## Command (run after this is pushed, word for word)
 
 ```
