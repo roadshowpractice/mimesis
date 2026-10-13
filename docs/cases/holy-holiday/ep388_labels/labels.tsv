@@ -1,0 +1,146 @@
+# Ep 388 (youtube aLJhpxrakCU) splitter scenes: Candace on screen or not
+# Labeled by Claude from contact sheets (sheet_1..4.png here), 2026-10-12 ~19:30 PDT, BEFORE any words were lined up.
+# Rule: her live camera picture is on screen (alone, or beside a document/graphic). Promo stills and ads without her = not.
+scene	start_s	end_s	candace	note
+1	0.0	0.4	no	black
+2	0.4	74.4	yes	
+3	74.4	76.0	no	graphic
+4	76.0	80.0	no	archive film
+5	80.0	83.6	no	archive film
+6	83.6	87.8	no	promo still of her (title card)
+7	87.8	111.2	yes	
+8	111.2	133.4	yes	
+9	133.4	136.0	no	other people
+10	136.0	138.4	no	other person
+11	138.4	150.0	yes	
+12	150.0	181.2	yes	
+13	181.2	210.2	yes	
+14	210.2	233.2	yes	
+15	233.2	275.0	yes	
+16	275.0	283.2	yes	
+17	283.2	297.2	yes	
+18	297.2	346.0	yes	
+19	346.0	361.8	yes	
+20	361.8	416.8	yes	
+21	416.8	441.8	yes	
+22	441.8	445.4	no	group photo
+23	445.4	479.2	yes	
+24	479.2	530.0	yes	
+25	530.0	545.4	yes	
+26	545.4	578.8	yes	
+27	578.8	634.6	yes	
+28	634.6	662.8	yes	
+29	662.8	724.2	yes	
+30	724.2	740.4	yes	
+31	740.4	771.4	yes	
+32	771.4	856.6	yes	
+33	856.6	877.6	yes	
+34	877.6	903.2	yes	
+35	903.2	960.8	yes	
+36	960.8	983.6	yes	
+37	983.6	1010.4	yes	
+38	1010.4	1053.8	yes	
+39	1053.8	1105.2	yes	
+40	1105.2	1134.6	yes	
+41	1134.6	1183.4	yes	
+42	1183.4	1228.8	yes	
+43	1228.8	1246.4	yes	
+44	1246.4	1274.2	yes	
+45	1274.2	1316.6	yes	
+46	1316.6	1375.4	yes	
+47	1375.4	1378.8	yes	
+48	1378.8	1399.0	yes	
+49	1399.0	1422.8	yes	
+50	1422.8	1462.2	yes	
+51	1462.2	1475.6	yes	
+52	1475.6	1493.2	yes	
+53	1493.2	1558.4	yes	
+54	1558.4	1560.6	yes	
+55	1560.6	1645.6	yes	
+56	1645.6	1703.6	no	text messages
+57	1703.6	1728.6	yes	
+58	1728.6	1744.8	no	aerial photo
+59	1744.8	1771.4	yes	
+60	1771.4	1780.0	yes	
+61	1780.0	1805.6	no	text messages
+62	1805.6	1817.4	yes	
+63	1817.4	1839.4	yes	
+64	1839.4	1856.4	yes	
+65	1856.4	1860.8	no	other person
+66	1860.8	1871.8	yes	
+67	1871.8	1876.4	no	other person
+68	1876.4	1898.4	yes	
+69	1898.4	1932.8	yes	
+70	1932.8	1952.0	yes	
+71	1952.0	1994.2	yes	
+72	1994.2	2005.6	yes	
+73	2005.6	2073.0	yes	
+74	2073.0	2085.2	yes	
+75	2085.2	2128.0	yes	
+76	2128.0	2161.6	yes	
+77	2161.6	2186.0	yes	
+78	2186.0	2208.6	yes	
+79	2208.6	2248.8	yes	
+80	2248.8	2249.0	yes	
+81	2249.0	2324.0	yes	ad read, her on camera
+82	2324.0	2332.8	yes	ad read, her on camera
+83	2332.8	2334.8	no	ad (sponsor footage)
+84	2334.8	2337.0	no	ad (sponsor footage)
+85	2337.0	2339.8	no	ad (sponsor footage)
+86	2339.8	2340.6	no	ad (sponsor footage)
+87	2340.6	2347.8	no	ad (sponsor footage)
+88	2347.8	2354.4	no	ad (sponsor footage)
+89	2354.4	2357.2	no	ad (sponsor footage)
+90	2357.2	2361.6	no	ad (sponsor footage)
+91	2361.6	2366.8	no	ad (sponsor footage)
+92	2366.8	2370.2	no	ad (sponsor footage)
+93	2370.2	2375.4	no	ad (sponsor footage)
+94	2375.4	2376.4	no	ad (sponsor footage)
+95	2376.4	2390.6	no	ad (sponsor footage)
+96	2390.6	2396.0	yes	ad read, her on camera
+97	2396.0	2451.0	yes	ad read, her on camera
+98	2451.0	2451.2	no	blank
+99	2451.2	2508.8	yes	
+100	2508.8	2515.8	yes	
+101	2515.8	2527.8	yes	
+102	2527.8	2530.6	no	street footage
+103	2530.6	2534.8	yes	
+104	2534.8	2538.4	no	street footage
+105	2538.4	2559.8	yes	
+106	2559.8	2594.8	yes	
+107	2594.8	2638.4	yes	
+108	2638.4	2673.6	yes	
+109	2673.6	2727.4	yes	
+110	2727.4	2775.8	yes	
+111	2775.8	2818.0	yes	
+112	2818.0	2853.2	yes	
+113	2853.2	2879.4	yes	
+114	2879.4	2889.0	yes	
+115	2889.0	2915.4	yes	
+116	2915.4	2932.0	yes	
+117	2932.0	2955.6	yes	
+118	2955.6	2992.0	yes	
+119	2992.0	3025.8	yes	
+120	3025.8	3053.8	no	article text
+121	3053.8	3192.4	yes	
+122	3192.4	3250.2	yes	
+123	3250.2	3250.4	yes	
+124	3250.4	3263.0	yes	
+125	3263.0	3311.8	yes	
+126	3311.8	3364.6	yes	
+127	3364.6	3391.8	yes	
+128	3391.8	3445.2	yes	
+129	3445.2	3566.6	yes	
+130	3566.6	3618.2	yes	
+131	3618.2	3696.4	yes	
+132	3696.4	3760.8	yes	
+133	3760.8	3843.4	yes	
+134	3843.4	3875.4	yes	
+135	3875.4	3883.2	no	book cover
+136	3883.2	3887.4	yes	
+137	3887.4	3891.8	yes	
+138	3891.8	3914.8	yes	
+139	3914.8	3920.8	yes	
+140	3920.8	3921.2	no	light flare
+141	3921.2	3924.8	no	archive film
+142	3924.8	3936.1	no	promo still of her (end card)
