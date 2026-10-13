@@ -50,6 +50,21 @@ offset.
 Whisper spells some words differently in two recordings of the same speech (THE CUT: 245 of 249 matched), which is
 why the bar is 80% and not 100%.
 
+## Addendum, 2026-10-12, before anything ran: visual cross-check (Grok's suggestion)
+
+Grok, on X ([reply](https://x.com/grok/status/2109816150884282448)): "a quick visual cross-check that the close-up and
+desk settings both appear in that episode, to confirm the cut beyond audio alone". Added, as a **confirmation step**: it
+does not change the 80% rule above.
+
+- For each scene (A and B), take 3 moments the transcript line-up matched: the first, middle and last matched word of
+  that scene's longest kept stretch.
+- At each moment, grab one frame from the post and one from the episode (at the post time plus the stretch's offset) and
+  set them side by side on one sheet, 6 pairs in all.
+- Each pair is marked **same setting** or **not**, by eye (Claude, then John). The post is a vertical crop with
+  captions on top, so the check is about the setting (room, wall, desk, mic, clothes), not a pixel-perfect match.
+- Reported with the result: "visual check: A 3/3, B 3/3" (or what it is), with the sheet. If a scene's audio is found but
+  its picture is not, the result says so plainly. That would mean the audio was laid over other footage.
+
 ## Command (run after this is pushed, word for word)
 
 ```
