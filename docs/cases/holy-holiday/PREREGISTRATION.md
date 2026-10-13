@@ -65,9 +65,30 @@ does not change the 80% rule above.
 - Reported with the result: "visual check: A 3/3, B 3/3" (or what it is), with the sheet. If a scene's audio is found but
   its picture is not, the result says so plainly. That would mean the audio was laid over other footage.
 
+## Addendum 2, 2026-10-12, before anything ran: scenes from the splitter, on both sides (John)
+
+John, on X ([reply](https://x.com/Jimzz1e/status/2109817909321355714)): "we agree that we use the scenes that were
+generated in splitter. Candace comprised 2 scenes." And: adjust one side or both, so it is apples to apples.
+
+So both videos are cut by **the same splitter with the same settings** (`dl_wm` `bin/scene_split.py`, threshold 50,
+5 frames a second), and the comparison is splitter scene to splitter scene:
+
+- **Post side** (already split): Candace is splitter clips 2, 3 and 4. Clips 2 and 4 are one scene, A (the close-up),
+  cut in two by clip 3, scene B (the studio desk). Two scenes, as John said.
+- **Episode side**: Ep 388's watermarked video goes through the same splitter after it is downloaded, before the line-up.
+- **The coverage rule now applies per splitter clip:** each of clips 2, 3 and 4 is **found** if the kept stretches cover at
+  least 80% of that clip's time. This replaces the pooled "80% of scene A" and "80% of scene B" above, and is stricter.
+- For each found clip, the result names the **episode splitter scene(s)** its words fall in.
+- **Prediction 1 holds** if clips 2, 3 and 4 are all found in Ep 388, and clips 2 and 4 land in the episode's close-up
+  setting and clip 3 in its desk setting. The setting is read off the splitter's own screenshots of those episode scenes,
+  which also makes the visual check (addendum 1) scene to scene.
+
 ## Command (run after this is pushed, word for word)
 
 ```
+# 1. split the episode, same splitter and settings as the post (addendum 2)
+(cd ~/Documents/repos/dl_wm && python bin/scene_split.py ~/boner_vault/dl_wm_outputs/<download day>/youtube__aLJhpxrakCU/youtube__aLJhpxrakCU_watermarked.mp4 --threshold 50 --fps 5)
+# 2. line up the words
 python bin/compare_cut.py compare data/holy_holiday_run1 \
   --full ~/boner_vault/dl_wm_outputs/<download day>/youtube__aLJhpxrakCU/youtube__aLJhpxrakCU.whisper.json \
   --cut ~/boner_vault/dl_wm_outputs/2026-10-12/instagram__DdWodVUBwWy/instagram__DdWodVUBwWy.whisper.json
