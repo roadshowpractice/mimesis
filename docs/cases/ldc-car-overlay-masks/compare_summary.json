@@ -1,0 +1,72 @@
+{
+ "frames": 973,
+ "c1_pass": 973,
+ "c1_mean": 3.72,
+ "c1_max": 4.5,
+ "c1_max_frame": 45,
+ "c2_pass": 937,
+ "dhash_max_whole_top_middle_bottom": [
+  7,
+  5,
+  8,
+  10
+ ],
+ "c2_fail_frames": [
+  3,
+  25,
+  95,
+  103,
+  108,
+  109,
+  113,
+  126,
+  142,
+  143,
+  144,
+  145,
+  152,
+  171,
+  188,
+  189,
+  195,
+  284,
+  289,
+  301,
+  306,
+  309,
+  313,
+  320,
+  338,
+  341,
+  349,
+  356,
+  357,
+  363,
+  366,
+  368,
+  378,
+  383,
+  387,
+  577
+ ],
+ "inside_logo_left_middle": {
+  "frames_on": 429,
+  "mean": 53.2
+ },
+ "inside_logo_top_right": {
+  "frames_on": 536,
+  "mean": 56.0
+ },
+ "inside_handle_left_middle": {
+  "frames_on": 429,
+  "mean": 52.4
+ },
+ "inside_handle_top_right": {
+  "frames_on": 536,
+  "mean": 49.9
+ },
+ "inside_link_banner": {
+  "frames_on": 949,
+  "mean": 92.0
+ }
+}

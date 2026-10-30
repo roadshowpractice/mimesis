@@ -1,0 +1,37 @@
+{
+ "boxes": {
+  "url": {
+   "x0": 72,
+   "y0": 1200,
+   "x1": 648,
+   "y1": 1262,
+   "ocr_frames": 131,
+   "t_first": 1.0,
+   "t_last": 68.5
+  },
+  "stamp_top_right": {
+   "x0": 522,
+   "y0": 378,
+   "x1": 668,
+   "y1": 404,
+   "ocr_frames": 8,
+   "t_first": 1.5,
+   "t_last": 26.5
+  },
+  "stamp_left_middle": {
+   "x0": 52,
+   "y0": 778,
+   "x1": 197,
+   "y1": 801,
+   "ocr_frames": 13,
+   "t_first": 13.5,
+   "t_last": 32.0
+  }
+ },
+ "pad_px": 4,
+ "ig_ocr_hits": 0,
+ "frame_size": [
+  720,
+  1280
+ ]
+}
