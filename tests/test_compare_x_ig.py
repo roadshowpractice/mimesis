@@ -1,3 +1,4 @@
+import csv
 import importlib.util
 import json
 from pathlib import Path
@@ -128,3 +129,76 @@ def test_ledger_keeps_every_post_on_a_matched_day(tmp_path):
     assert rows["SAME"]["status"] == "MATCHED" and rows["SAME"]["best_x"] == "9"
     assert rows["OTHER"]["status"].startswith("UNMATCHED")   # only 1 of 7 window days has X data -> "partial"
     assert rows["COLLAB"]["own"] == "collab" and rows["COLLAB"]["status"] == "NO FILE"
+
+
+def _band_base():
+    """Top and bottom thirds carry a horizontal gradient, so a bar there changes the dHash."""
+    from PIL import Image, ImageDraw
+    w = h = 240
+    a = Image.new("RGB", (w, h), "white")
+    d = ImageDraw.Draw(a)
+    for x in range(w):
+        v = int(255 * x / (w - 1))
+        d.line([(x, 0), (x, 79)], fill=(v, v, v))
+        d.line([(x, 160), (x, h - 1)], fill=(v, v, v))
+    d.rectangle([40, 100, 120, 140], fill="black")
+    return a
+
+
+def _bar(img, where):
+    from PIL import ImageDraw
+    b = img.copy()
+    w, h = img.size
+    y0, y1 = (0, 20) if where == "top" else (h - 20, h)
+    ImageDraw.Draw(b).rectangle([0, y0, w - 1, y1 - 1], fill="black")
+    return b
+
+
+def _images_case(tmp_path, a, b):
+    case = _case(tmp_path, [{"code": "A", "owner": "acct", "taken_at": 1786500000, "caption": ""}])
+    _x(case, "1", "", "2026-08-11T22:00:00.000Z")
+    (case / "ig" / "media" / "A").mkdir()
+    a.save(case / "ig" / "media" / "A" / "A.jpg", quality=95)
+    b.save(case / "x" / "media" / "1_0.jpg", quality=95)
+    return case
+
+
+def _pair_row(case):
+    with open(case / "out" / "pairs.csv", newline="") as f:
+        return next(csv.DictReader(f))
+
+
+def test_banded_hash_bar_in_bottom_third_is_a_band_match(tmp_path):
+    a = _band_base()
+    case = _images_case(tmp_path, a, _bar(a, "bottom"))
+    assert _run(case)[("A", "1")] == "SAME MATERIAL"    # 2/3 bands match, not IDENTICAL
+    row = _pair_row(case)
+    assert int(row["best_image_distance"]) <= 6          # whole frame passes too
+    bands = dict(kv.split("=") for kv in row["band_distances"].split(";"))
+    assert int(bands["top"]) == 0 and int(bands["middle"]) == 0
+    assert int(bands["bottom"]) > 6                       # bottom band altered
+    assert row["bands_matched"] == "2"
+    altered = dict(kv.split("=") for kv in row["altered_bands"].split(";"))
+    assert list(altered) == ["bottom"] and int(altered["bottom"]) > 6
+    assert "altered" in row["reasons"] and "bottom" in row["reasons"]
+
+
+def test_two_bands_changed_is_not_a_band_match(tmp_path):
+    a = _band_base()
+    case = _images_case(tmp_path, a, _bar(_bar(a, "bottom"), "top"))
+    assert _run(case)[("A", "1")] != "IDENTICAL"
+    row = _pair_row(case)
+    assert row["bands_matched"] == "1"                    # only the middle third matches
+    altered = dict(kv.split("=") for kv in row["altered_bands"].split(";"))
+    assert set(altered) == {"top", "bottom"}
+    assert int(altered["top"]) > 6 and int(altered["bottom"]) > 6
+
+
+def test_banded_hash_identical_images_all_bands_zero(tmp_path):
+    a = _band_base()
+    case = _images_case(tmp_path, a, a)
+    assert _run(case)[("A", "1")] == "IDENTICAL"
+    row = _pair_row(case)
+    assert row["best_image_distance"] == "0"
+    assert row["band_distances"] == "top=0;middle=0;bottom=0"
+    assert row["bands_matched"] == "3" and row["altered_bands"] == ""

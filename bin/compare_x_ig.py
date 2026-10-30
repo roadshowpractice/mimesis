@@ -30,13 +30,23 @@ Steps (each one writes to CUSTODY.log):
 
 Rules (THRESHOLDS below) are fixed before the comparison and written into out/manifest.json.
 Pair classes, strongest first:
-  IDENTICAL       same image (dHash distance <= 6), same link, or text 5-word-shingle Jaccard >= 0.8
-  SAME MATERIAL   near image (<= 12), shared run of >= 8 words, >= 2 shared 5-word shingles,
-                  or the same uncommon link domain
+  IDENTICAL       same image (whole-frame dHash <= 6 AND every horizontal third <= 6), same link,
+                  or text 5-word-shingle Jaccard >= 0.8
+  SAME MATERIAL   near image (whole frame <= 12), shared run of >= 8 words, >= 2 shared 5-word
+                  shingles, or the same uncommon link domain
   TOPIC ONLY      >= 3 shared uncommon content words
   NOTHING SHARED  none of the above
 Control: same-day pairs (|day difference| <= window) are compared with pairs from other days. If topic
 overlap is no higher on the same day, timing isn't telling us anything.
+
+Banded image hash: images and video frames are hashed whole and per horizontal third (top /
+middle / bottom). All three bands within band_hash_identical (and the whole frame within
+img_identical) supports an image IDENTICAL. Two of three bands within the cutoff still counts as
+the same footage (SAME MATERIAL); the failing band is reported as altered, by name and distance.
+Zero or one matching band is no band match, and the pair falls back to the other rules. This
+way an added banner or corner stamp shows as one altered band instead of quietly passing or
+silently sinking the whole comparison. Distances are in pairs.csv (band_distances, altered_bands,
+bands_matched).
 
 Python 3.8+ (mimesis venv). Uses Pillow + numpy for image hashes, ffmpeg for video frames.
 """
@@ -59,6 +69,8 @@ from pathlib import Path
 THRESHOLDS = {
     "img_identical": 6,          # dHash Hamming distance (64-bit)
     "img_near": 12,
+    "band_hash_identical": 6,    # dHash per horizontal third for an image IDENTICAL
+    "band_match_min": 2,         # bands within cutoff that still count as the same footage
     "shingle_n": 5,              # words per shingle
     "shingle_jaccard_identical": 0.8,
     "shared_shingles_material": 2,
@@ -176,6 +188,22 @@ def dhash(path_or_img):
 
 def hamming(a, b):
     return bin(a ^ b).count("1")
+
+
+BANDS = ("top", "middle", "bottom")
+
+
+def band_hashes(path_or_img):
+    """dHash of the whole frame and of each horizontal third: (whole, {top, middle, bottom})."""
+    from PIL import Image
+    img = path_or_img if hasattr(path_or_img, "convert") else Image.open(path_or_img)
+    img = img.convert("L")
+    w, h = img.size
+    whole = dhash(img)
+    bands = {}
+    for k, name in enumerate(BANDS):
+        bands[name] = dhash(img.crop((0, k * h // 3, w, (k + 1) * h // 3)))
+    return whole, bands
 
 
 def video_frames(video, outdir, every):
@@ -524,13 +552,15 @@ def fingerprints(case, item):
     fps = []
     for img in item.get("images") or []:
         try:
-            fps.append((dhash(img), img.name))
+            whole, bands = band_hashes(img)
+            fps.append({"whole": whole, "bands": bands, "where": img.name})
         except Exception:
             pass
     for v in item.get("videos") or []:
         for fr in video_frames(v, case / "derived" / "frames" / v.stem, THRESHOLDS["frame_every_s"]):
             try:
-                fps.append((dhash(fr), "{}@{}".format(v.name, fr.stem)))
+                whole, bands = band_hashes(fr)
+                fps.append({"whole": whole, "bands": bands, "where": "{}@{}".format(v.name, fr.stem)})
             except Exception:
                 pass
     return fps
@@ -550,23 +580,45 @@ def score_pair(x, ig, df, n_items):
     same_domains = sorted(xd & idm)
     cap = max(2, T["rare_df_max"] * n_items)
     rare = sorted(w for w in (x["words"] & ig["words"]) if df.get(w, 0) <= cap)
-    best_img, best_img_where = None, ""
-    for hx, wx in x["fps"]:
-        for hi, wi in ig["fps"]:
-            d = hamming(hx, hi)
-            if best_img is None or d < best_img:
-                best_img, best_img_where = d, "{} ~ {}".format(wx, wi)
+    best_img, best_img_where, best_bands = None, "", {}
+    for hx in x["fps"]:
+        for hi in ig["fps"]:
+            d = hamming(hx["whole"], hi["whole"])
+            bands = {b: hamming(hx["bands"][b], hi["bands"][b]) for b in BANDS}
+            key = (d, max(bands.values()))
+            if best_img is None or key < (best_img, max(best_bands.values())):
+                best_img, best_bands = d, bands
+                best_img_where = "{} ~ {}".format(hx["where"], hi["where"])
     reasons = []
-    if best_img is not None and best_img <= T["img_identical"]:
-        reasons.append("same image (d={}: {})".format(best_img, best_img_where))
+    image_identical = False
+    band_match = False
+    bands_matched = 0
+    altered_bands = ""
+    if best_img is not None:
+        altered = [b for b in BANDS if best_bands[b] > T["band_hash_identical"]]
+        bands_matched = len(BANDS) - len(altered)
+        altered_bands = ";".join("{}={}".format(b, best_bands[b]) for b in altered)
+        if not altered and best_img <= T["img_identical"]:
+            image_identical = True
+            reasons.append("same image (d={}, bands={}: {})".format(
+                best_img, "/".join(str(best_bands[b]) for b in BANDS), best_img_where))
+        elif bands_matched >= T["band_match_min"]:
+            band_match = True
+            alt = ", ".join("{} (band={}, whole={})".format(b, best_bands[b], best_img) for b in altered)
+            reasons.append("band match {}/{} (same footage), altered: {}".format(
+                bands_matched, len(BANDS), alt or "whole frame only (d={})".format(best_img)))
+        elif best_img <= T["img_identical"]:
+            alt = ", ".join("{} (band={}, whole={})".format(b, best_bands[b], best_img) for b in altered)
+            reasons.append("whole image passes but bands match only {}/{}, altered: {}".format(
+                bands_matched, len(BANDS), alt))
     if same_urls:
         reasons.append("same link: " + ", ".join(same_urls))
     if jac >= T["shingle_jaccard_identical"]:
         reasons.append("text near-identical (Jaccard {:.2f})".format(jac))
-    if reasons:
+    if image_identical or same_urls or jac >= T["shingle_jaccard_identical"]:
         cls = "IDENTICAL"
     else:
-        if best_img is not None and best_img <= T["img_near"]:
+        if best_img is not None and best_img <= T["img_near"] and not band_match:
             reasons.append("near image (d={}: {})".format(best_img, best_img_where))
         if run >= T["common_run_material"]:
             reasons.append("shared run of {} words".format(run))
@@ -583,7 +635,10 @@ def score_pair(x, ig, df, n_items):
             cls = "NOTHING SHARED"
     return {"class": cls, "jaccard": round(jac, 3), "longest_run": run, "shared_phrases": len(shared_sh),
             "same_urls": same_urls, "same_domains": same_domains, "rare_shared": rare,
-            "best_image_distance": best_img, "reasons": "; ".join(reasons),
+            "best_image_distance": best_img,
+            "band_distances": ";".join("{}={}".format(b, best_bands[b]) for b in BANDS) if best_bands else "",
+            "bands_matched": bands_matched, "altered_bands": altered_bands,
+            "reasons": "; ".join(reasons),
             "example_phrases": sorted(shared_sh)[:3]}
 
 
@@ -622,8 +677,8 @@ def cmd_compare(a):
     out = case / "out"
     out.mkdir(exist_ok=True)
     cols = ["ig", "ig_kind", "ig_day", "x", "x_kind", "x_day", "day_gap", "same_day", "class", "jaccard",
-            "longest_run", "shared_phrases", "best_image_distance", "same_urls", "same_domains", "rare_shared",
-            "reasons"]
+            "longest_run", "shared_phrases", "best_image_distance", "band_distances", "bands_matched",
+            "altered_bands", "same_urls", "same_domains", "rare_shared", "reasons"]
     with open(out / "pairs.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(cols)
@@ -660,12 +715,17 @@ def cmd_compare(a):
     L += ["## Rules used (fixed before the run)", "", "```", json.dumps(THRESHOLDS, indent=1), "```", "",
           "Method: text = X post text vs Instagram caption + transcript; words lower-cased, links removed; "
           "'uncommon' words appear in at most {:.0%} of all items. Images: 64-bit dHash of X photos/posters vs "
-          "Instagram images and video frames every {}s. Day boundaries in UTC{:+d}.".format(
-              THRESHOLDS["rare_df_max"], THRESHOLDS["frame_every_s"], THRESHOLDS["tz_offset_hours"]), "",
+          "Instagram images and video frames every {}s, whole frame and each horizontal third (top/middle/bottom); "
+          "an image counts as IDENTICAL only if the whole and every band are within {} bits; {} of 3 bands "
+          "within that cutoff still counts as the same footage, with the altered band named. Day boundaries in UTC{:+d}.".format(
+              THRESHOLDS["rare_df_max"], THRESHOLDS["frame_every_s"], THRESHOLDS["band_hash_identical"],
+              THRESHOLDS["band_match_min"], THRESHOLDS["tz_offset_hours"]), "",
           "Limits: X plain reposts and deleted posts aren't in the input; a transcript is only as good as "
-          "Whisper; an image edited heavily (crop, overlay) can escape dHash.", ""]
+          "Whisper; an image edited heavily (crop, overlay) can escape dHash, and the bands only show where it "
+          "changed, not what was added.", ""]
     (out / "report.md").write_text("\n".join(L), encoding="utf-8")
     manifest = {"run_utc": utc_now(), "tool": script_identity(), "thresholds": THRESHOLDS,
+                "band_hashes": list(BANDS),
                 "params": {"window_days": a.window_days, "account": a.account, "x_account": a.x_account,
                            "own_only": a.own_only},
                 "inputs_checked": checked,
