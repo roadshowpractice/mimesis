@@ -1,0 +1,415 @@
+{
+ "rule": "DECIDE THE MASKS (x, y, t) from Tim's FB frames ONLY; no Instagram pixel is read here. claude, 2026-10-30.\nJohn: \"define a rectangle around the logo as it appears ... first decide where and when ... 3-d x, y, t\";\n\"we want the smallest convex set we can find ... it's a choice, so we can make a good one.\"\nChoice made:\n - shapes: one convex hull per added piece (IG logo, @handle, link banner), not one box for all; each hull grown by\n   GROW px (anti-aliased edges / soft shadow);\n - logo & handle: glyph pixels = white (>=220) at the left-middle spot at 12.0 s and not white there at 5.0 s (plain asphalt\n   behind); split into logo / handle at the widest empty band of rows; the same glyphs are shifted to the top-right spot by\n   template match on the 5.0 s frame (one shift per piece: the layout differs between spots);\n - link: banner = dark (<=60) or white (>=220) pixels in y >= 1150 at frame 30 that were not so at frame 20; hull;\n - time: a piece is \"on\" in a frame if its glyph contrast (mean glyph px - mean of a 4-px ring around them) >= CON;\n   each on-span is then widened by TPAD frames each side to catch the fade ends. Only frames 0..972 (the shared part) matter.\nOutput: masks.json (hull polygons + frame spans) and masks.npz (the per-piece pixel masks). These are frozen before compare.py.\n",
+ "params": {
+  "GROW": 3,
+  "CON": 25,
+  "TPAD": 3,
+  "last_shared_frame": 972
+ },
+ "pieces": {
+  "logo_left_middle": {
+   "hull": [
+    [
+     93,
+     747
+    ],
+    [
+     91,
+     751
+    ],
+    [
+     88,
+     753
+    ],
+    [
+     85,
+     754
+    ],
+    [
+     64,
+     754
+    ],
+    [
+     60,
+     752
+    ],
+    [
+     58,
+     750
+    ],
+    [
+     57,
+     748
+    ],
+    [
+     56,
+     744
+    ],
+    [
+     56,
+     727
+    ],
+    [
+     57,
+     723
+    ],
+    [
+     59,
+     720
+    ],
+    [
+     63,
+     718
+    ],
+    [
+     67,
+     717
+    ],
+    [
+     83,
+     717
+    ],
+    [
+     87,
+     718
+    ],
+    [
+     90,
+     720
+    ],
+    [
+     91,
+     721
+    ],
+    [
+     93,
+     724
+    ]
+   ],
+   "shift_from_left_middle": null,
+   "match": null,
+   "area_px": 1835,
+   "frame_spans": [
+    [
+     272,
+     539
+    ],
+    [
+     812,
+     972
+    ]
+   ],
+   "contrast_q05_50_95": [
+    -2.2,
+    1.6,
+    172.4
+   ]
+  },
+  "logo_top_right": {
+   "hull": [
+    [
+     663,
+     347
+    ],
+    [
+     661,
+     351
+    ],
+    [
+     658,
+     353
+    ],
+    [
+     655,
+     354
+    ],
+    [
+     634,
+     354
+    ],
+    [
+     630,
+     352
+    ],
+    [
+     628,
+     350
+    ],
+    [
+     627,
+     348
+    ],
+    [
+     626,
+     344
+    ],
+    [
+     626,
+     327
+    ],
+    [
+     627,
+     323
+    ],
+    [
+     629,
+     320
+    ],
+    [
+     633,
+     318
+    ],
+    [
+     637,
+     317
+    ],
+    [
+     653,
+     317
+    ],
+    [
+     657,
+     318
+    ],
+    [
+     660,
+     320
+    ],
+    [
+     661,
+     321
+    ],
+    [
+     663,
+     324
+    ]
+   ],
+   "shift_from_left_middle": [
+    570,
+    -400
+   ],
+   "match": 0.714,
+   "area_px": 1835,
+   "frame_spans": [
+    [
+     6,
+     269
+    ],
+    [
+     540,
+     811
+    ]
+   ],
+   "contrast_q05_50_95": [
+    -2.0,
+    30.6,
+    170.8
+   ]
+  },
+  "handle_left_middle": {
+   "hull": [
+    [
+     192,
+     793
+    ],
+    [
+     191,
+     795
+    ],
+    [
+     189,
+     796
+    ],
+    [
+     59,
+     796
+    ],
+    [
+     57,
+     794
+    ],
+    [
+     57,
+     784
+    ],
+    [
+     59,
+     782
+    ],
+    [
+     189,
+     782
+    ],
+    [
+     191,
+     783
+    ],
+    [
+     192,
+     785
+    ]
+   ],
+   "shift_from_left_middle": null,
+   "match": null,
+   "area_px": 2970,
+   "frame_spans": [
+    [
+     272,
+     539
+    ],
+    [
+     812,
+     972
+    ]
+   ],
+   "contrast_q05_50_95": [
+    -1.5,
+    1.4,
+    183.1
+   ]
+  },
+  "handle_top_right": {
+   "hull": [
+    [
+     662,
+     394
+    ],
+    [
+     661,
+     396
+    ],
+    [
+     659,
+     397
+    ],
+    [
+     529,
+     397
+    ],
+    [
+     527,
+     395
+    ],
+    [
+     527,
+     385
+    ],
+    [
+     529,
+     383
+    ],
+    [
+     659,
+     383
+    ],
+    [
+     661,
+     384
+    ],
+    [
+     662,
+     386
+    ]
+   ],
+   "shift_from_left_middle": [
+    470,
+    -399
+   ],
+   "match": 0.659,
+   "area_px": 2970,
+   "frame_spans": [
+    [
+     6,
+     269
+    ],
+    [
+     540,
+     811
+    ]
+   ],
+   "contrast_q05_50_95": [
+    -1.1,
+    62.7,
+    140.3
+   ]
+  },
+  "link_banner": {
+   "hull": [
+    [
+     656,
+     1231
+    ],
+    [
+     655,
+     1233
+    ],
+    [
+     639,
+     1262
+    ],
+    [
+     637,
+     1264
+    ],
+    [
+     635,
+     1265
+    ],
+    [
+     86,
+     1265
+    ],
+    [
+     83,
+     1264
+    ],
+    [
+     81,
+     1262
+    ],
+    [
+     65,
+     1233
+    ],
+    [
+     64,
+     1231
+    ],
+    [
+     64,
+     1196
+    ],
+    [
+     68,
+     1192
+    ],
+    [
+     652,
+     1192
+    ],
+    [
+     655,
+     1195
+    ],
+    [
+     656,
+     1200
+    ]
+   ],
+   "shift_from_left_middle": null,
+   "match": null,
+   "area_px": 47243,
+   "frame_spans": [
+    [
+     24,
+     972
+    ]
+   ],
+   "contrast_q05_50_95": [
+    -98.7,
+    -89.6,
+    -63.4
+   ]
+  }
+ }
+}
