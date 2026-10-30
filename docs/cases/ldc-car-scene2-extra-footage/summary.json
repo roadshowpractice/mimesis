@@ -1,0 +1,10 @@
+{
+ "scene1_frames": 973,
+ "scene2_frames": 1098,
+ "retest_match_2of3": "968/973",
+ "scene2_frames_3of3": 0,
+ "scene2_frames_2of3": 0,
+ "scene2_frames_identical": 0,
+ "best_whole": 13,
+ "median_best_whole": 20.0
+}
