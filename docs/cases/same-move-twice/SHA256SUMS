@@ -1,0 +1,21 @@
+# videos as downloaded by us (not in this repo)
+c8e2c675081e0bc814596d5620e05a61812b41b1642333c906d52d7d299cf513  instagram__De6mHwFRbAG.mp4
+c71cfe8063cf8c83731ad787c3e0c8a7bb7702e0675163d6b3a307261059cf06  facebook__1140352768334907.mp4
+b6ca861764903c63ead8a6218d02fd547dc654e879e1530a687cf12d895f428f  instagram__De8MHpPRfC2.mp4
+ee2d5d36196150abd12caf2fc81117b31de7e8b85b54467de82613908215a61f  instagram__De-hLujNZYP.mp4
+# frames on the card (raw ffmpeg grabs, not in this repo)
+97b1fa479dc65ededdbd7b1754ec911dd6480f8c6e7bba11b8b83b8a8444693e  mario_orig_t10.png
+11c14f825e6d1352eb20de4b1460652e854206fcb6ac4ff5a27d7730b8956dd9  tim_fb_t18.36.png
+ea57f3c3faab33ed2a1a68778e9e1a8d1110d84aafd2d5772669ae8d1280db2c  tim_fb_t31.14.png
+4085924e45b1a38cdfa8b7382f5c4f1a866e83f129e431b7972df6965b4c0feb  nik_orig_t10.png
+ee8506a3094f0c9e9476217d3fa4e33421bdbe37743c0414c0b867f73ae0461d  tim_ig_t1.4.png
+7d83ee2f0c0abc001d9ab90e299a737253a73a08d09a193e9081453bfc092377  tim_ig_t163.4.png
+# the card as posted on X (https://x.com/MerrillAnt50522/status/2117017059129426267)
+e0d83e52676661a0cd56b0ad962a5271f02bb5f3e63a020843e8924b8980d825  2026-11-01_1408_card_same_move_twice_X.png
+# scrape records giving the post times
+7326e917364f8eec7d721ba6e0f442038bd08012296ab6da12a60b316e9ca9cb  timballard89_timeline.jsonl (2026-10-31 reverse)
+f37ac6a72cfab4550b8fa39809b1242fb46912b01ad7b3213efc5f25b6a7d602  dep.nikolas.ferreira_timeline.jsonl (2026-11-01 reverse)
+37c80dd040372479e81841a1d4939d9281053167ae51fb5d2be2a4d326af513d  mariofriasoficial_timeline.jsonl (2026-10-27 forward)
+7453f8ad2a9f8e5f6555fcda826a529c9b57ff8354938fee9d8918371c805afb  facebook__1140352768334907.json (metadata)
+# in this folder
+12e3b87ae607042f72cda1fee469e4decc6aaf8fb186fe7d1b1b78fe2b66d32f  instances.csv
