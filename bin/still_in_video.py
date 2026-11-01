@@ -34,7 +34,7 @@ import numpy as np
 from PIL import Image
 
 
-W, H = 320, 180                  # frame size the search works at
+W, H = 320, 180                  # frame size the search works at (--frame; "auto" keeps each video's own shape, long side 320)
 SCALES = tuple(round(1.0 - 0.05 * i, 3) for i in range(16))   # coarse: window height / frame height, 1.0 ... 0.25
 STEP = 4                         # coarse window position step, pixels (on the 320x180 frame)
 TOP = 3                          # then a fine search (1 px, 1.25% size) around the 3 best coarse windows
@@ -155,6 +155,23 @@ def fine(I, bits, cx, cy, w0, h0):
     return best
 
 
+def frame_size(video, spec):
+    """'WxH' as given, or 'auto': the video's display aspect with the long side 320 (even numbers)."""
+    if spec != "auto":
+        w, h = (int(x) for x in spec.lower().split("x"))
+        if w % 2 or h % 2: sys.exit("--frame needs even width and height (yuv420p)")
+        return w, h
+    out = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
+                          "stream=width,height:stream_side_data=rotation:stream_tags=rotate",
+                          "-of", "json", str(video)], capture_output=True, text=True, check=True).stdout
+    st = json.loads(out)["streams"][0]; vw, vh = int(st["width"]), int(st["height"])
+    rot = next((int(float(d["rotation"])) for d in st.get("side_data_list", []) if "rotation" in d), 0)
+    rot = rot or int(st.get("tags", {}).get("rotate", 0))
+    if abs(rot) % 180 == 90: vw, vh = vh, vw     # phone reels carry a 90-degree flag; ffmpeg autorotates the frames
+    k = 320 / max(vw, vh)
+    return max(2, int(round(vw * k / 2)) * 2), max(2, int(round(vh * k / 2)) * 2)
+
+
 def search(stills, video, maxd, fps=1.0):
     sb = {n: image_bits(Image.open(p)) for n, p in stills.items()}
     grids = {n: window_grid(Image.open(p).size[0] / Image.open(p).size[1]) for n, p in stills.items()}
@@ -207,6 +224,9 @@ def main(argv=None):
     ap.add_argument("--fps", type=float, default=1.0, help="frames sampled per second of video (default 1)")
     ap.add_argument("--out", default="still_in_video", help="report folder name under CASE/out/")
     ap.add_argument("--ytdlp", default="yt-dlp")
+    ap.add_argument("--frame", default="320x180",
+                    help="WxH the frames are scaled to (default 320x180, landscape). 'auto' = each video's own aspect, long side 320: "
+                         "needed for portrait reels, where 320x180 squeezes the picture ~3x and nothing can match (found 2026-10-30)")
     a = ap.parse_args(argv)
     case = Path(a.case)
     videos = []
@@ -220,14 +240,16 @@ def main(argv=None):
     stills = cut_stills(case, a.thumb, a.still)
     out = case / "out" / a.out; out.mkdir(parents=True, exist_ok=True)
     res = dict(made_at=utc_now(), threshold=a.max, fps=a.fps, coarse_scales=SCALES, coarse_step_px=STEP,
-               fine="+-4 px, +-5% size around top 3", frame_size=[W, H],
+               fine="+-4 px, +-5% size around top 3", frame_spec=a.frame,
                stills={n: [s for s in a.still if s.startswith(n + "=")][0].split("=")[1] for n in stills}, videos=[])
     md = [f"# Stills in videos ({utc_now()})", "", f"{a.fps:g} frames per second, match = dHash <= {a.max} (region search; whole frame shown too).", "",
           "| Video | Frames | Still | Region: best distance (at) | first match | Whole frame: best |", "|---|---|---|---|---|---|"]
+    global W, H
     for label, video in videos:
-        print(f"searching {label}: {video}", flush=True)
+        W, H = frame_size(video, a.frame)
+        print(f"searching {label}: {video} (frames {W}x{H})", flush=True)
         nframes, best, first = search(stills, video, a.max, a.fps)
-        res["videos"].append(dict(label=label, path=str(video), sha256=sha256_file(video), frames=nframes,
+        res["videos"].append(dict(label=label, path=str(video), sha256=sha256_file(video), frames=nframes, frame_size=[W, H],
                                   stills={n: dict(region_best=best[n]["region"], region_first_match_s=first[n]["region"],
                                                   whole_best=best[n]["whole"]) for n in stills}))
         for n in stills:
@@ -236,6 +258,8 @@ def main(argv=None):
     found = [(v["label"], n) for v in res["videos"] for n, d in v["stills"].items() if d["region_first_match_s"] is not None]
     res["matches"] = found
     md += ["", "**Matches (dHash <= {}):** {}".format(a.max, ", ".join(f"{n} in {l}" for l, n in found) if found else "none"), ""]
+    sizes = {tuple(v["frame_size"]) for v in res["videos"]}
+    res["frame_size"] = list(sizes.pop()) if len(sizes) == 1 else None   # old key kept; None when --frame auto mixes shapes
     (out / "result.json").write_text(json.dumps(res, indent=2) + "\n")
     (out / "result.md").write_text("\n".join(md))
     custody(case, "still_in_video report", "wrote", out / "result.json")
