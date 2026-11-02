@@ -1,0 +1,7 @@
+{
+ "control_bottom_only_B_vs_FB_scene1": "453/973",
+ "FB_scene2_frames_with_bottom_match_in_A": "142/1098",
+ "median_best_bottom_bits": 11.0,
+ "min_best_bottom_bits": 1,
+ "offset_A_minus_FB_among_matches_median": 31.0
+}

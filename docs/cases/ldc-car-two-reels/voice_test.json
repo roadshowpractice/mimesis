@@ -1,0 +1,170 @@
+[
+ {
+  "a": "fb_half1",
+  "b": "fb_half2",
+  "kind": "fb vs fb",
+  "cos": 0.945
+ },
+ {
+  "a": "fb_half1",
+  "b": "chad:DdWodVUBwWy",
+  "kind": "fb vs chad",
+  "cos": 0.822
+ },
+ {
+  "a": "fb_half1",
+  "b": "chad:DeDux6thmUm",
+  "kind": "fb vs chad",
+  "cos": 0.788
+ },
+ {
+  "a": "fb_half1",
+  "b": "tim:1020903481014768",
+  "kind": "fb vs tim",
+  "cos": 0.708
+ },
+ {
+  "a": "fb_half1",
+  "b": "tim:1068335199370200",
+  "kind": "fb vs tim",
+  "cos": 0.657
+ },
+ {
+  "a": "fb_half1",
+  "b": "tim:2162868474611710",
+  "kind": "fb vs tim",
+  "cos": 0.706
+ },
+ {
+  "a": "fb_half1",
+  "b": "ldc_ig:DeaBysIPTSx",
+  "kind": "fb vs ldc_ig",
+  "cos": 0.941
+ },
+ {
+  "a": "fb_half2",
+  "b": "chad:DdWodVUBwWy",
+  "kind": "fb vs chad",
+  "cos": 0.791
+ },
+ {
+  "a": "fb_half2",
+  "b": "chad:DeDux6thmUm",
+  "kind": "fb vs chad",
+  "cos": 0.792
+ },
+ {
+  "a": "fb_half2",
+  "b": "tim:1020903481014768",
+  "kind": "fb vs tim",
+  "cos": 0.746
+ },
+ {
+  "a": "fb_half2",
+  "b": "tim:1068335199370200",
+  "kind": "fb vs tim",
+  "cos": 0.697
+ },
+ {
+  "a": "fb_half2",
+  "b": "tim:2162868474611710",
+  "kind": "fb vs tim",
+  "cos": 0.738
+ },
+ {
+  "a": "fb_half2",
+  "b": "ldc_ig:DeaBysIPTSx",
+  "kind": "fb vs ldc_ig",
+  "cos": 0.99
+ },
+ {
+  "a": "chad:DdWodVUBwWy",
+  "b": "chad:DeDux6thmUm",
+  "kind": "same person",
+  "cos": 0.817
+ },
+ {
+  "a": "chad:DdWodVUBwWy",
+  "b": "tim:1020903481014768",
+  "kind": "chad vs tim",
+  "cos": 0.638
+ },
+ {
+  "a": "chad:DdWodVUBwWy",
+  "b": "tim:1068335199370200",
+  "kind": "chad vs tim",
+  "cos": 0.675
+ },
+ {
+  "a": "chad:DdWodVUBwWy",
+  "b": "tim:2162868474611710",
+  "kind": "chad vs tim",
+  "cos": 0.648
+ },
+ {
+  "a": "chad:DdWodVUBwWy",
+  "b": "ldc_ig:DeaBysIPTSx",
+  "kind": "chad vs ldc_ig",
+  "cos": 0.784
+ },
+ {
+  "a": "chad:DeDux6thmUm",
+  "b": "tim:1020903481014768",
+  "kind": "chad vs tim",
+  "cos": 0.673
+ },
+ {
+  "a": "chad:DeDux6thmUm",
+  "b": "tim:1068335199370200",
+  "kind": "chad vs tim",
+  "cos": 0.705
+ },
+ {
+  "a": "chad:DeDux6thmUm",
+  "b": "tim:2162868474611710",
+  "kind": "chad vs tim",
+  "cos": 0.684
+ },
+ {
+  "a": "chad:DeDux6thmUm",
+  "b": "ldc_ig:DeaBysIPTSx",
+  "kind": "chad vs ldc_ig",
+  "cos": 0.781
+ },
+ {
+  "a": "tim:1020903481014768",
+  "b": "tim:1068335199370200",
+  "kind": "same person",
+  "cos": 0.854
+ },
+ {
+  "a": "tim:1020903481014768",
+  "b": "tim:2162868474611710",
+  "kind": "same person",
+  "cos": 0.912
+ },
+ {
+  "a": "tim:1020903481014768",
+  "b": "ldc_ig:DeaBysIPTSx",
+  "kind": "tim vs ldc_ig",
+  "cos": 0.742
+ },
+ {
+  "a": "tim:1068335199370200",
+  "b": "tim:2162868474611710",
+  "kind": "same person",
+  "cos": 0.81
+ },
+ {
+  "a": "tim:1068335199370200",
+  "b": "ldc_ig:DeaBysIPTSx",
+  "kind": "tim vs ldc_ig",
+  "cos": 0.693
+ },
+ {
+  "a": "tim:2162868474611710",
+  "b": "ldc_ig:DeaBysIPTSx",
+  "kind": "tim vs ldc_ig",
+  "cos": 0.732
+ }
+]

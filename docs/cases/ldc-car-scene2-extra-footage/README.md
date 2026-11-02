@@ -1,5 +1,9 @@
 # LDC car: the extra 36.6 s in Tim Ballard's Facebook copy (2026-10-30)
 
+> **Correction (2026-11-01).** The footage this page calls scene 2 / extra footage is not footage LDC never posted: it is LDC's own
+> earlier reel **DeaBysIPTSx** ("here I am at work", 2026-10-12 19:55 UTC), posted the day before TREES. Tim's copy shows a wider
+> picture than LDC's post. The frame results on this page still stand. See [`../ldc-car-two-reels/`](../ldc-car-two-reels/).
+
 **Pair.** latterdaychad Instagram reel **Decca9IB4mM** (posted 2026-10-13 18:24:29 UTC, 974 frames at 30 fps = 32.47 s) and
 officialtimballard Facebook reel **1653357746398669** (posted 2026-10-14 07:23:08 UTC, 12.98 h later; 2071 frames = 69.03 s).
 Post times are as the platforms reported them to our scrapes. Video sha256s in `SHA256SUMS`; the videos themselves are not in this repo.

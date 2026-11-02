@@ -1,0 +1,188 @@
+[
+ {
+  "a": "fb_half1",
+  "b": "fb_half2",
+  "kind": "QUESTION",
+  "cos": 0.945
+ },
+ {
+  "a": "fb_half1_a",
+  "b": "fb_half1_b",
+  "kind": "same speaker, same half",
+  "cos": 0.872
+ },
+ {
+  "a": "fb_half2_a",
+  "b": "fb_half2_b",
+  "kind": "same speaker, same half",
+  "cos": 0.941
+ },
+ {
+  "a": "ig_ldc",
+  "b": "fb_half1",
+  "kind": "same audio (known)",
+  "cos": 0.998
+ },
+ {
+  "a": "other:DeVwi1QIjTD",
+  "b": "fb_half1",
+  "kind": "other speaker",
+  "cos": 0.699
+ },
+ {
+  "a": "other:DeVwi1QIjTD",
+  "b": "fb_half2",
+  "kind": "other speaker",
+  "cos": 0.731
+ },
+ {
+  "a": "other:DeZhinGIQJx",
+  "b": "fb_half1",
+  "kind": "other speaker",
+  "cos": 0.704
+ },
+ {
+  "a": "other:DeZhinGIQJx",
+  "b": "fb_half2",
+  "kind": "other speaker",
+  "cos": 0.751
+ },
+ {
+  "a": "other:DeXxtYkhN_t",
+  "b": "fb_half1",
+  "kind": "other speaker",
+  "cos": 0.7
+ },
+ {
+  "a": "other:DeXxtYkhN_t",
+  "b": "fb_half2",
+  "kind": "other speaker",
+  "cos": 0.726
+ },
+ {
+  "a": "other:1558352752727165",
+  "b": "fb_half1",
+  "kind": "other speaker",
+  "cos": 0.739
+ },
+ {
+  "a": "other:1558352752727165",
+  "b": "fb_half2",
+  "kind": "other speaker",
+  "cos": 0.773
+ },
+ {
+  "a": "other:1744079277721192",
+  "b": "fb_half1",
+  "kind": "other speaker",
+  "cos": 0.636
+ },
+ {
+  "a": "other:1744079277721192",
+  "b": "fb_half2",
+  "kind": "other speaker",
+  "cos": 0.677
+ },
+ {
+  "a": "other:DedEVp6ow5y",
+  "b": "fb_half1",
+  "kind": "other speaker",
+  "cos": 0.66
+ },
+ {
+  "a": "other:DedEVp6ow5y",
+  "b": "fb_half2",
+  "kind": "other speaker",
+  "cos": 0.7
+ },
+ {
+  "a": "other:DeVwi1QIjTD",
+  "b": "other:DeZhinGIQJx",
+  "kind": "other vs other",
+  "cos": 0.843
+ },
+ {
+  "a": "other:DeVwi1QIjTD",
+  "b": "other:DeXxtYkhN_t",
+  "kind": "other vs other",
+  "cos": 0.842
+ },
+ {
+  "a": "other:DeVwi1QIjTD",
+  "b": "other:1558352752727165",
+  "kind": "other vs other",
+  "cos": 0.827
+ },
+ {
+  "a": "other:DeVwi1QIjTD",
+  "b": "other:1744079277721192",
+  "kind": "other vs other",
+  "cos": 0.8
+ },
+ {
+  "a": "other:DeVwi1QIjTD",
+  "b": "other:DedEVp6ow5y",
+  "kind": "other vs other",
+  "cos": 0.804
+ },
+ {
+  "a": "other:DeZhinGIQJx",
+  "b": "other:DeXxtYkhN_t",
+  "kind": "other vs other",
+  "cos": 0.893
+ },
+ {
+  "a": "other:DeZhinGIQJx",
+  "b": "other:1558352752727165",
+  "kind": "other vs other",
+  "cos": 0.855
+ },
+ {
+  "a": "other:DeZhinGIQJx",
+  "b": "other:1744079277721192",
+  "kind": "other vs other",
+  "cos": 0.754
+ },
+ {
+  "a": "other:DeZhinGIQJx",
+  "b": "other:DedEVp6ow5y",
+  "kind": "other vs other",
+  "cos": 0.858
+ },
+ {
+  "a": "other:DeXxtYkhN_t",
+  "b": "other:1558352752727165",
+  "kind": "other vs other",
+  "cos": 0.84
+ },
+ {
+  "a": "other:DeXxtYkhN_t",
+  "b": "other:1744079277721192",
+  "kind": "other vs other",
+  "cos": 0.777
+ },
+ {
+  "a": "other:DeXxtYkhN_t",
+  "b": "other:DedEVp6ow5y",
+  "kind": "other vs other",
+  "cos": 0.786
+ },
+ {
+  "a": "other:1558352752727165",
+  "b": "other:1744079277721192",
+  "kind": "other vs other",
+  "cos": 0.807
+ },
+ {
+  "a": "other:1558352752727165",
+  "b": "other:DedEVp6ow5y",
+  "kind": "other vs other",
+  "cos": 0.858
+ },
+ {
+  "a": "other:1744079277721192",
+  "b": "other:DedEVp6ow5y",
+  "kind": "other vs other",
+  "cos": 0.794
+ }
+]
