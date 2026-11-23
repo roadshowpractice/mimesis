@@ -12,3 +12,6 @@ SpeechRecognition==3.10.4
 pytest
 
 beautifulsoup4==4.12.3
+
+# downloader (bin/call_download.py); not pulled in by the other pins
+yt_dlp==2025.3.26
