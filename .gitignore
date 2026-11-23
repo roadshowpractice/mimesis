@@ -64,3 +64,8 @@ dmypy.json
 
 # Local data
 /data/
+
+# Never commit browser cookies (use bin/refresh_cookies.py)
+*.cookies.txt
+conf/cookies*.txt
+cookies.txt
